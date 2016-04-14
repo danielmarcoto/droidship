@@ -4,10 +4,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-//ola mundo
+    DroidShip view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //logica do jogo
+        view = new DroidShip(this);
+        //configura view
+        setContentView(view);
+    }
+
+    protected void onResume(){
+        super.onResume();
+        view.resume();
     }
 }
