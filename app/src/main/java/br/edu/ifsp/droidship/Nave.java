@@ -10,7 +10,7 @@ public class Nave {
         Paint paint;
         paint = new Paint();
         paint.setColor((Color.GREEN));
-        canvas.drawCircle(200, 200, 50, paint);
+        canvas.drawCircle(150, 400, 20, paint);
     }
 
 }
