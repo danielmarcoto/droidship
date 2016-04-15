@@ -1,26 +1,33 @@
 package br.edu.ifsp.droidship;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
-public class MainActivity extends Activity {
-    DroidShip view;
+import br.edu.ifsp.droidship.game.DroidShip;
+
+public class MainActivity extends AppCompatActivity {
+
+    private DroidShip droidShip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        //logica do jogo
-        view = new DroidShip(this);
-        //configura view
-        setContentView(view);
+        droidShip = (DroidShip) findViewById(R.id.droidship);
     }
 
-    protected void onResume(){
+    @Override
+    protected void onResume() {
         super.onResume();
-        view.resume();
+        droidShip.retomar();
+
+        new Thread(droidShip).start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        droidShip.pausar();
     }
 }
