@@ -21,12 +21,10 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
     private boolean isRunning;
 
-    public DroidShip(Context context){
-        super(context);
+    public DroidShip(Context context, AttributeSet attributeSet){
+        super(context, attributeSet);
 
         this.context = context;
-
-        Log.i("Debug", "Construtor do DroidShip");
 
         inicializar();
     }
@@ -34,6 +32,7 @@ public class DroidShip extends SurfaceView implements Runnable  {
     private void inicializar(){
 
         tela = new Tela(context);
+        // TODO: Mover o cálculo para algum local
 
         float yNave = (tela.getAltura() / 5) * 3;
         float xNave = (tela.getLargura() / 2) - (Nave.RAIO);
@@ -58,6 +57,7 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
             // TODO: Movimento dos elementos do jogo
             nave.desenhar(canvas);
+
 
             holder.unlockCanvasAndPost(canvas);
         }

@@ -9,18 +9,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.edu.ifsp.droidship.MainActivity">
 
-    <!--
     <br.edu.ifsp.droidship.game.DroidShip
         android:id="@+id/droidship"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />-->
+        android:layout_height="match_parent" />
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="38dp"
-        android:id="@+id/container"></FrameLayout>
 </RelativeLayout>

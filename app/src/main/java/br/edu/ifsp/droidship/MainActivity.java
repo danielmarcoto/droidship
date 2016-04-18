@@ -2,7 +2,6 @@ package br.edu.ifsp.droidship;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.FrameLayout;
 
 import br.edu.ifsp.droidship.game.DroidShip;
 
@@ -14,11 +13,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //droidShip = (DroidShip) findViewById(R.id.droidship);
 
-        FrameLayout layout = (FrameLayout)findViewById(R.id.container);
-        droidShip = new DroidShip(getApplicationContext());
-        layout.addView(droidShip);
+        droidShip = (DroidShip) findViewById(R.id.droidship);
 
     }
 
