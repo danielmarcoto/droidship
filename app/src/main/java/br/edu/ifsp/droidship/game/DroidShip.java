@@ -3,33 +3,40 @@ package br.edu.ifsp.droidship.game;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.FrameLayout;
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public class DroidShip extends SurfaceView implements Runnable {
+public class DroidShip extends SurfaceView implements Runnable  {
     private Context context;
     private Nave nave;
+    private final SurfaceHolder holder = getHolder();
+    private Tela tela;
 
     private boolean isRunning;
 
-    public DroidShip(Context context) {
+    public DroidShip(Context context){
         super(context);
 
         this.context = context;
 
-        inicializar();
+        Log.i("Debug", "Construtor do DroidShip");
 
-        // TODO: Criar uma classe Fundo
-        setBackgroundColor(Color.BLACK);
+        inicializar();
     }
 
     private void inicializar(){
-        // TODO: Mover o cálculo para algum local
-        float yNave = (getY() / 5) * 3;
-        float xNave = (getX() / 2) - (Nave.RAIO);
+
+        tela = new Tela(context);
+
+        float yNave = (tela.getAltura() / 5) * 3;
+        float xNave = (tela.getLargura() / 2) - (Nave.RAIO);
 
         this.nave = new Nave(xNave, yNave);
     }
@@ -45,9 +52,7 @@ public class DroidShip extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while(isRunning){
-            SurfaceHolder holder = this.getHolder();
-            if (!holder.getSurface().isValid())
-                continue;
+            if (!holder.getSurface().isValid()) continue;
 
             Canvas canvas = holder.lockCanvas();
 
