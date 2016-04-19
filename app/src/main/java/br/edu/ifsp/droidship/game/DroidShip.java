@@ -2,22 +2,21 @@ package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.StringBuilderPrinter;
+import android.view.DragEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.FrameLayout;
+import android.view.View;
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public class DroidShip extends SurfaceView implements Runnable  {
+public class DroidShip extends SurfaceView implements Runnable, View.OnDragListener  {
     private Context context;
-    private Nave nave;
+    private Spaceship spaceship;
     private final SurfaceHolder holder = getHolder();
-    private Tela tela;
+    private ScreenHelper screenHelper;
 
     private boolean isRunning;
 
@@ -26,25 +25,32 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
         this.context = context;
 
-        inicializar();
+        initialize();
+
+        setOnDragListener(this);
+
+        DragShadowBuilder a = new DragShadowBuilder();
+
+
+        //boolean isDragStart = this.startDrag()
     }
 
-    private void inicializar(){
+    private void initialize(){
 
-        tela = new Tela(context);
-        // TODO: Mover o cálculo para algum local
+        screenHelper = new ScreenHelper(context);
+        // TODO: Mover o cálculo para outro local
 
-        float yNave = (tela.getAltura() / 5) * 3;
-        float xNave = (tela.getLargura() / 2) - (Nave.RAIO);
+        float yNave = (screenHelper.getHeight() / 5) * 3;
+        float xNave = (screenHelper.getLarguraWidth() / 2);
 
-        this.nave = new Nave(xNave, yNave);
+        this.spaceship = new Spaceship(xNave, yNave);
     }
 
-    public void pausar(){
+    public void pause(){
         isRunning = false;
     }
 
-    public void retomar(){
+    public void resume(){
         isRunning = true;
     }
 
@@ -56,10 +62,45 @@ public class DroidShip extends SurfaceView implements Runnable  {
             Canvas canvas = holder.lockCanvas();
 
             // TODO: Movimento dos elementos do jogo
-            nave.desenhar(canvas);
+            spaceship.draw(canvas);
 
 
             holder.unlockCanvasAndPost(canvas);
         }
+    }
+
+    @Override
+    public boolean onDragEvent(DragEvent dragEvent) {
+
+        Log.i("Debug", "Drag: " + dragEvent.getAction());
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
+            Log.i("Debug", "Drag Started");
+        }
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
+            Log.i("Debug", "Drag Ended");
+        }
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DROP){
+            Log.i("Debug", "Drag Drop");
+        }
+
+        return super.onDragEvent(dragEvent);
+    }
+
+    @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+
+        Log.i("Debug", "Drag: " + dragEvent.getAction());
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
+            Log.i("Debug", "Drag Started");
+        }
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
+            Log.i("Debug", "Drag Ended");
+        }
+        return false;
     }
 }

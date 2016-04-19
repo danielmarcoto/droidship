@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        droidShip.retomar();
+        droidShip.resume();
 
         new Thread(droidShip).start();
     }
@@ -31,6 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        droidShip.pausar();
+        droidShip.pause();
     }
 }

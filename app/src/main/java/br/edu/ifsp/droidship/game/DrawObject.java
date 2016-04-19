@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public abstract class ObjetoDesenho {
+public abstract class DrawObject {
     protected float x;
     protected float y;
 
@@ -25,5 +25,5 @@ public abstract class ObjetoDesenho {
         this.y = y;
     }
 
-    public abstract void desenhar(Canvas canvas);
+    public abstract void draw(Canvas canvas);
 }
