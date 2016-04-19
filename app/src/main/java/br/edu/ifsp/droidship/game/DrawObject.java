@@ -1,29 +1,17 @@
 package br.edu.ifsp.droidship.game;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.view.View;
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public abstract class DrawObject {
-    protected float x;
-    protected float y;
+public abstract class DrawObject extends View {
 
-    public float getX() {
-        return x;
+    public DrawObject(Context context) {
+        super(context);
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public abstract void draw(Canvas canvas);
+    public abstract void drawNode(Canvas canvas);
 }

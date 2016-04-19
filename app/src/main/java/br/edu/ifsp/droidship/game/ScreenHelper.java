@@ -16,7 +16,9 @@ public class ScreenHelper {
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
         Display display = wm.getDefaultDisplay();
+
         metrics = new DisplayMetrics();
+
         display.getMetrics(metrics);
     }
 
@@ -24,7 +26,7 @@ public class ScreenHelper {
         return metrics.heightPixels;
     }
 
-    public int getLarguraWidth(){
+    public int getWidth(){
         return metrics.widthPixels;
     }
 }

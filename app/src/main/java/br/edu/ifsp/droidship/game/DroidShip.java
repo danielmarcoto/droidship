@@ -12,10 +12,13 @@ import android.view.View;
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public class DroidShip extends SurfaceView implements Runnable, View.OnDragListener  {
+public class DroidShip extends SurfaceView implements Runnable  {
+
+    private final SurfaceHolder holder = getHolder();
+
     private Context context;
     private Spaceship spaceship;
-    private final SurfaceHolder holder = getHolder();
+    private Control control;
     private ScreenHelper screenHelper;
 
     private boolean isRunning;
@@ -26,24 +29,15 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnDragListe
         this.context = context;
 
         initialize();
-
-        setOnDragListener(this);
-
-        DragShadowBuilder a = new DragShadowBuilder();
-
-
-        //boolean isDragStart = this.startDrag()
     }
 
     private void initialize(){
 
         screenHelper = new ScreenHelper(context);
-        // TODO: Mover o cálculo para outro local
 
-        float yNave = (screenHelper.getHeight() / 5) * 3;
-        float xNave = (screenHelper.getLarguraWidth() / 2);
+        control = new Control(context, screenHelper);
 
-        this.spaceship = new Spaceship(xNave, yNave);
+        spaceship = new Spaceship(context, screenHelper);
     }
 
     public void pause(){
@@ -62,8 +56,8 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnDragListe
             Canvas canvas = holder.lockCanvas();
 
             // TODO: Movimento dos elementos do jogo
-            spaceship.draw(canvas);
-
+            spaceship.drawNode(canvas);
+            control.drawNode(canvas);
 
             holder.unlockCanvasAndPost(canvas);
         }
@@ -87,20 +81,5 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnDragListe
         }
 
         return super.onDragEvent(dragEvent);
-    }
-
-    @Override
-    public boolean onDrag(View view, DragEvent dragEvent) {
-
-        Log.i("Debug", "Drag: " + dragEvent.getAction());
-
-        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
-            Log.i("Debug", "Drag Started");
-        }
-
-        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
-            Log.i("Debug", "Drag Ended");
-        }
-        return false;
     }
 }
