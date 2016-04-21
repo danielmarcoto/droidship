@@ -2,17 +2,25 @@ package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.Random;
+=======
+import android.util.Log;
+import android.view.DragEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+>>>>>>> origin/master
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
 public class DroidShip extends SurfaceView implements Runnable  {
+<<<<<<< HEAD
     private Context context;
     private Nave nave;
     private Enemy enemy;
@@ -20,6 +28,15 @@ public class DroidShip extends SurfaceView implements Runnable  {
     private final SurfaceHolder holder = getHolder();
     private Tela tela;
     private Random random = new Random();
+=======
+
+    private final SurfaceHolder holder = getHolder();
+
+    private Context context;
+    private Spaceship spaceship;
+    private Control control;
+    private ScreenHelper screenHelper;
+>>>>>>> origin/master
 
     private boolean isRunning;
 
@@ -28,11 +45,12 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
         this.context = context;
 
-        inicializar();
+        initialize();
     }
 
-    private void inicializar(){
+    private void initialize(){
 
+<<<<<<< HEAD
         tela = new Tela(context);
 
         float yNave = (tela.getAltura() / 5) * 3;
@@ -45,13 +63,20 @@ public class DroidShip extends SurfaceView implements Runnable  {
         this.enemy = new Enemy(xEnemy,yEnemy,raio);
 
         this.endlessEnemies = new EndlessEnemies(xEnemy, yEnemy, raio);
+=======
+        screenHelper = new ScreenHelper(context);
+
+        control = new Control(context, screenHelper);
+
+        spaceship = new Spaceship(context, screenHelper);
+>>>>>>> origin/master
     }
 
-    public void pausar(){
+    public void pause(){
         isRunning = false;
     }
 
-    public void retomar(){
+    public void resume(){
         isRunning = true;
     }
 
@@ -65,13 +90,38 @@ public class DroidShip extends SurfaceView implements Runnable  {
             canvas.drawColor(Color.BLACK);
 
             // TODO: Movimento dos elementos do jogo
+<<<<<<< HEAD
             nave.desenhar(canvas);
             endlessEnemies.desenhar(canvas);
             endlessEnemies.falling();
 
 
+=======
+            spaceship.drawNode(canvas);
+            control.drawNode(canvas);
+>>>>>>> origin/master
 
             holder.unlockCanvasAndPost(canvas);
         }
+    }
+
+    @Override
+    public boolean onDragEvent(DragEvent dragEvent) {
+
+        Log.i("Debug", "Drag: " + dragEvent.getAction());
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
+            Log.i("Debug", "Drag Started");
+        }
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
+            Log.i("Debug", "Drag Ended");
+        }
+
+        if (dragEvent.getAction() == DragEvent.ACTION_DROP){
+            Log.i("Debug", "Drag Drop");
+        }
+
+        return super.onDragEvent(dragEvent);
     }
 }
