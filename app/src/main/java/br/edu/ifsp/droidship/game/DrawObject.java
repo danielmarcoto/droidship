@@ -11,7 +11,9 @@ public abstract class DrawObject extends View {
 
     public DrawObject(Context context) {
         super(context);
+
     }
 
     public abstract void drawNode(Canvas canvas);
+
 }

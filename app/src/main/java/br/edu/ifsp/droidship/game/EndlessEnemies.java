@@ -1,6 +1,5 @@
 package br.edu.ifsp.droidship.game;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,30 +9,33 @@ import java.util.Random;
 /**
  * Created by Eduardo on 19/04/2016.
  */
-public class EndlessEnemies extends ObjetoDesenho {
+public class EndlessEnemies {
 
     private Random random = new Random();
-    private Enemy enemy = new Enemy(x, y, raio);
+    float x = random.nextInt(600);
+    float radius = random.nextInt(50 - 20) + 20;
+    public static float y = 0;
+    private Enemy enemy = new Enemy(x, y, radius) ;
     private int enemiesQuant = random.nextInt(6 - 2) + 2;
     private int enemiesDist = random.nextInt(100 - 50) + 50;
     private final List<Enemy> enemyList = new ArrayList<Enemy>();
 
-    public EndlessEnemies(float x, float y, float raio){
+    public EndlessEnemies(float x, float y, float radius){
         this.x = x;
         this.y = y;
-        this.raio = raio;
+        this.radius = radius;
 
         for (int i = 0; i < enemiesQuant; i++){
             x += enemiesDist;
-            this.enemyList.add(new Enemy(x, y, raio));
+            this.enemyList.add(new Enemy(x, y, radius));
         }
     }
 
-    @Override
-    public void desenhar(Canvas canvas) {
+    public void drawNode(Canvas canvas) {
         for (Enemy enemy : this.enemyList)
-           enemy.desenhar(canvas);
+           enemy.drawNode(canvas);
     }
+
 
     public void falling(){
 
@@ -43,9 +45,9 @@ public class EndlessEnemies extends ObjetoDesenho {
             Enemy enemy = (Enemy) iterator.next();
             enemy.falling();
 
-             if (enemy.getY() > 900){       //> tela.getAltura()){ deu problema
+             if (enemy.getY() > 900){       // TODO pegar o tamanho da tela
                iterator.remove();
-               Enemy anotherEnemy = new Enemy(random.nextInt(400) + enemiesDist, 0, random.nextInt(50 - 10) + 10);
+                 Enemy anotherEnemy = new Enemy(random.nextInt(600) + enemiesDist, 0, random.nextInt(50 - 20) + 20);
                iterator.add(anotherEnemy);
              }
         }

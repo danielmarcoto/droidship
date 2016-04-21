@@ -2,33 +2,22 @@ package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
-<<<<<<< HEAD
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import java.util.Random;
-=======
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
->>>>>>> origin/master
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
 public class DroidShip extends SurfaceView implements Runnable  {
-<<<<<<< HEAD
-    private Context context;
-    private Nave nave;
+
     private Enemy enemy;
     private EndlessEnemies endlessEnemies;
-    private final SurfaceHolder holder = getHolder();
-    private Tela tela;
     private Random random = new Random();
-=======
 
     private final SurfaceHolder holder = getHolder();
 
@@ -36,7 +25,6 @@ public class DroidShip extends SurfaceView implements Runnable  {
     private Spaceship spaceship;
     private Control control;
     private ScreenHelper screenHelper;
->>>>>>> origin/master
 
     private boolean isRunning;
 
@@ -50,26 +38,20 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
     private void initialize(){
 
-<<<<<<< HEAD
-        tela = new Tela(context);
+        float x = random.nextInt(600);
+        float y = 0;
+        float radius = random.nextInt(50 - 20) + 20;
 
-        float yNave = (tela.getAltura() / 5) * 3;
-        float xNave = (tela.getLargura() / 2) - (Nave.RAIO);
-        this.nave = new Nave(xNave, yNave);
+        enemy = new Enemy(x, y, radius);
 
-        float xEnemy = random.nextInt(10);
-        float yEnemy = 0;
-        float raio = random.nextInt(40 - 10) + 10;
-        this.enemy = new Enemy(xEnemy,yEnemy,raio);
+        endlessEnemies = new EndlessEnemies(x, y, radius);
 
-        this.endlessEnemies = new EndlessEnemies(xEnemy, yEnemy, raio);
-=======
         screenHelper = new ScreenHelper(context);
 
         control = new Control(context, screenHelper);
 
         spaceship = new Spaceship(context, screenHelper);
->>>>>>> origin/master
+
     }
 
     public void pause(){
@@ -89,17 +71,15 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
             canvas.drawColor(Color.BLACK);
 
+
+
             // TODO: Movimento dos elementos do jogo
-<<<<<<< HEAD
-            nave.desenhar(canvas);
-            endlessEnemies.desenhar(canvas);
-            endlessEnemies.falling();
 
-
-=======
             spaceship.drawNode(canvas);
             control.drawNode(canvas);
->>>>>>> origin/master
+            endlessEnemies.drawNode(canvas);
+            endlessEnemies.falling();
+
 
             holder.unlockCanvasAndPost(canvas);
         }
