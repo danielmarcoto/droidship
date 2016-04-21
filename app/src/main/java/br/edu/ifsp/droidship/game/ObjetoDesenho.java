@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 public abstract class ObjetoDesenho {
     protected float x;
     protected float y;
+    protected float raio;
 
     public float getX() {
         return x;
@@ -24,6 +25,10 @@ public abstract class ObjetoDesenho {
     public void setY(float y) {
         this.y = y;
     }
+
+    public float getRaio() { return raio; }
+
+    public void setRaio(float raio) { this.raio = raio; }
 
     public abstract void desenhar(Canvas canvas);
 }
