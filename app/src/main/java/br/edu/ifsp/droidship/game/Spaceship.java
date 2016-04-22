@@ -10,7 +10,7 @@ import android.graphics.Paint;
  */
 public class Spaceship extends DrawObject {
 
-    public static float RADIUS = 100;
+    public static float RADIUS = 80;
 
     public Spaceship(Context context, ScreenHelper screenHelper){
         super(context);

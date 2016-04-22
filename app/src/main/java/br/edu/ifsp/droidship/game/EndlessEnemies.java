@@ -12,10 +12,9 @@ import java.util.Random;
 public class EndlessEnemies {
 
     private Random random = new Random();
-    float x = random.nextInt(600);
-    float radius = random.nextInt(50 - 20) + 20;
+    private float x;
+    private float radius;
     public static float y = 0;
-    private Enemy enemy = new Enemy(x, y, radius) ;
     private int enemiesQuant = random.nextInt(6 - 2) + 2;
     private int enemiesDist = random.nextInt(100 - 50) + 50;
     private final List<Enemy> enemyList = new ArrayList<Enemy>();
@@ -46,9 +45,9 @@ public class EndlessEnemies {
             enemy.falling();
 
              if (enemy.getY() > 900){       // TODO pegar o tamanho da tela
-               iterator.remove();
+                 iterator.remove();
                  Enemy anotherEnemy = new Enemy(random.nextInt(600) + enemiesDist, 0, random.nextInt(50 - 20) + 20);
-               iterator.add(anotherEnemy);
+                 iterator.add(anotherEnemy);
              }
         }
 

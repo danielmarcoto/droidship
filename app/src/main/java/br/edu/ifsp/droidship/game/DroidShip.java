@@ -18,9 +18,10 @@ public class DroidShip extends SurfaceView implements Runnable  {
     private Enemy enemy;
     private EndlessEnemies endlessEnemies;
     private Random random = new Random();
-
+    private float x ;
+    private float y ;
+    private float radius;
     private final SurfaceHolder holder = getHolder();
-
     private Context context;
     private Spaceship spaceship;
     private Control control;
@@ -37,10 +38,6 @@ public class DroidShip extends SurfaceView implements Runnable  {
     }
 
     private void initialize(){
-
-        float x = random.nextInt(600);
-        float y = 0;
-        float radius = random.nextInt(50 - 20) + 20;
 
         enemy = new Enemy(x, y, radius);
 
