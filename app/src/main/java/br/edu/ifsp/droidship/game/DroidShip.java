@@ -4,17 +4,20 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.Random;
-import android.util.Log;
-import android.view.DragEvent;
+
+import android.view.View;
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public class DroidShip extends SurfaceView implements Runnable  {
+public class DroidShip extends SurfaceView implements Runnable, View.OnTouchListener {
 
+    private GestureDetector gestureDetector;
     private Enemy enemy;
     private EndlessEnemies endlessEnemies;
     private Random random = new Random();
@@ -34,21 +37,29 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
         this.context = context;
 
+        setFocusable(true);
+        setClickable(true);
+
+        setOnTouchListener(this);
+
         initialize();
     }
 
     private void initialize(){
 
+        screenHelper = new ScreenHelper(context);
+
         enemy = new Enemy(x, y, radius);
 
-        endlessEnemies = new EndlessEnemies(x, y, radius);
-
-        screenHelper = new ScreenHelper(context);
+        endlessEnemies = new EndlessEnemies(screenHelper, x, y, radius);
 
         control = new Control(context, screenHelper);
 
         spaceship = new Spaceship(context, screenHelper);
 
+        GestureDetector.SimpleOnGestureListener gestureListener = new ShipControl(spaceship);
+
+        gestureDetector = new GestureDetector(context, gestureListener);
     }
 
     public void pause(){
@@ -68,8 +79,6 @@ public class DroidShip extends SurfaceView implements Runnable  {
 
             canvas.drawColor(Color.BLACK);
 
-
-
             // TODO: Movimento dos elementos do jogo
 
             spaceship.drawNode(canvas);
@@ -77,28 +86,18 @@ public class DroidShip extends SurfaceView implements Runnable  {
             endlessEnemies.drawNode(canvas);
             endlessEnemies.falling();
 
-
             holder.unlockCanvasAndPost(canvas);
         }
     }
 
     @Override
-    public boolean onDragEvent(DragEvent dragEvent) {
+    public boolean onTouch(View view, MotionEvent motionEvent) {
 
-        Log.i("Debug", "Drag: " + dragEvent.getAction());
+        if (motionEvent.getY() > control.getY())
+            gestureDetector.onTouchEvent(motionEvent);
 
-        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED){
-            Log.i("Debug", "Drag Started");
-        }
+        //Log.i("Debug", "onTouch - DroidShip");
 
-        if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED){
-            Log.i("Debug", "Drag Ended");
-        }
-
-        if (dragEvent.getAction() == DragEvent.ACTION_DROP){
-            Log.i("Debug", "Drag Drop");
-        }
-
-        return super.onDragEvent(dragEvent);
+        return false;
     }
 }
