@@ -29,6 +29,7 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
     private Spaceship spaceship;
     private Control control;
     private ScreenHelper screenHelper;
+    private CollisionDetector collisionDetector;
 
     private boolean isRunning;
 
@@ -60,6 +61,8 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
         GestureDetector.SimpleOnGestureListener gestureListener = new ShipControl(spaceship);
 
         gestureDetector = new GestureDetector(context, gestureListener);
+
+        collisionDetector = new CollisionDetector(endlessEnemies, spaceship);
     }
 
     public void pause(){
@@ -85,6 +88,11 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
             endlessEnemies.falling();
+            collisionDetector.collision(canvas);
+            if(collisionDetector.gameover){
+                break;
+            }
+
 
             holder.unlockCanvasAndPost(canvas);
         }

@@ -10,7 +10,7 @@ import android.graphics.Paint;
  */
 public class Spaceship extends DrawObject {
 
-    public static float RADIUS = 80;
+    private static float RADIUS = 80;
 
     private ScreenHelper screenHelper;
 
@@ -23,12 +23,20 @@ public class Spaceship extends DrawObject {
         setX(screenHelper.getWidth() / 2);
     }
 
+    public static float getRADIUS() {
+        return RADIUS;
+    }
+
+    public static void setRADIUS(float RADIUS) {
+        Spaceship.RADIUS = RADIUS;
+    }
+
     @Override
     public void drawNode(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
 
-        canvas.drawCircle(getX(), getY(), RADIUS, paint);
+        canvas.drawCircle(getX(), getY(), getRADIUS(), paint);
     }
 
     public boolean isOutOfScreenLeft(){

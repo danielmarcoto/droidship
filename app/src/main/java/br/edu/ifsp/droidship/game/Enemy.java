@@ -18,25 +18,45 @@ public class Enemy {
     private float radius;
 
     public Enemy(float x, float y, float radius) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
+        this.setX(x);
+        this.setY(y);
+        this.setRadius(radius);
     }
 
-    public void drawNode(Canvas canvas) {
+    public void drawEnemy(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
 
-        canvas.drawCircle(x, y, radius, paint);
+        canvas.drawCircle(getX(), getY(), getRadius(), paint);
     }
 
 
     public void falling(){
-        this.y += random.nextInt(10 - 2) + 2;
+        this.setY(this.getY() + random.nextInt(10 - 2) + 2);
     }
 
 
     public float getY() {
         return y;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 }

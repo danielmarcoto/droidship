@@ -15,7 +15,7 @@ public class EndlessEnemies {
     private Random random = new Random();
     private float x;
     private float radius;
-    public static float y = 0;
+    private static float y = 0;
     private int enemiesQuant = random.nextInt(6 - 2) + 2;
     private int enemiesDist = random.nextInt(100 - 50) + 50;
     private final List<Enemy> enemyList = new ArrayList<Enemy>();
@@ -32,9 +32,13 @@ public class EndlessEnemies {
         }
     }
 
+    public static float getY() {
+        return y;
+    }
+
     public void drawNode(Canvas canvas) {
         for (Enemy enemy : this.enemyList)
-           enemy.drawNode(canvas);
+           enemy.drawEnemy(canvas);
     }
 
 
@@ -59,4 +63,11 @@ public class EndlessEnemies {
         return enemyList;
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
 }
