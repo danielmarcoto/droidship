@@ -18,18 +18,16 @@ import android.view.View;
  */
 public class DroidShip extends SurfaceView implements Runnable, View.OnTouchListener {
 
+    private final SurfaceHolder holder = getHolder();
+
     private GestureDetector gestureDetector;
     private EndlessEnemies endlessEnemies;
-    private Random random = new Random();
-    private float x ;
-    private float y ;
-    private float radius;
-    private final SurfaceHolder holder = getHolder();
     private Context context;
     private Spaceship spaceship;
     private Control control;
     private ScreenHelper screenHelper;
     private CollisionDetector collisionDetector;
+    private BackgroundGame backgroundGame;
 
     private boolean isRunning;
 
@@ -40,7 +38,6 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
         setFocusable(true);
         setClickable(true);
-
         setOnTouchListener(this);
 
         initialize();
@@ -61,6 +58,8 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
         gestureDetector = new GestureDetector(context, gestureListener);
 
         collisionDetector = new CollisionDetector(endlessEnemies, spaceship);
+
+        backgroundGame = new BackgroundGame(context, screenHelper);
     }
 
     public void pause(){
@@ -80,13 +79,15 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
             canvas.drawColor(Color.BLACK);
 
-            // TODO: Movimento dos elementos do jogo
-
+            backgroundGame.drawNode(canvas);
             spaceship.drawNode(canvas);
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
-            endlessEnemies.falling();
 
+            endlessEnemies.falling();
+            backgroundGame.move();
+
+            // Verifica se há colisão e encerra quando colide
             if (collisionDetector.hasHit()){
                 new Gameover(context, screenHelper).drawNode(canvas);
 
@@ -102,8 +103,6 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
         if (motionEvent.getY() > control.getY())
             gestureDetector.onTouchEvent(motionEvent);
-
-        //Log.i("Debug", "onTouch - DroidShip");
 
         return false;
     }

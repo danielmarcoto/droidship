@@ -18,8 +18,6 @@ public class ShipControl extends GestureDetector.SimpleOnGestureListener {
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
-        //Log.i("Debug", "distanceX: " + String.valueOf(distanceX));
-
         float newX = spaceship.getX() - distanceX;
 
         if (!spaceship.isOutOfScreenLeft() && spaceship.getX() > newX)
@@ -27,9 +25,6 @@ public class ShipControl extends GestureDetector.SimpleOnGestureListener {
 
         if (!spaceship.isOutOfScreenRight() && spaceship.getX() < newX)
             spaceship.setX(newX);
-
-        //if (!spaceship.isOutOfScreen())
-        //    spaceship.setX(newX);
 
         return super.onScroll(e1, e2, distanceX, distanceY);
     }

@@ -12,6 +12,8 @@ import java.util.Random;
  */
 public class EndlessEnemies {
 
+    // TODO: Melhorar a forma de fortear a quantidade de inimigos por rodada
+
     private final Context context;
     private ScreenHelper screenHelper;
     private Random random = new Random();

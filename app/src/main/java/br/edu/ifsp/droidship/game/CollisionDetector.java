@@ -22,8 +22,6 @@ public class CollisionDetector {
 
             double radiusSum = spaceship.getRADIUS() + enemy.getRadius();
 
-            //Log.i("Debug", String.format("h: %f s: %f", distance, radiusSum));
-
             //verifica distancia entre os raios
             if (distance <= radiusSum){
                 return true;
