@@ -1,42 +1,35 @@
 package br.edu.ifsp.droidship.game;
 
-import android.content.Context;
-import android.graphics.Canvas;
-
 /**
  * Created by danielmarcoto on 26/04/16.
  */
 public class CollisionDetector {
     private EndlessEnemies endlessEnemies;
     private Spaceship spaceship;
-    private double distance;
-    public boolean gameover;
-    private Context context;
-    private ScreenHelper screenHelper;
-    private float x ;
-    private float y ;
-    private float radius;
 
     public CollisionDetector(EndlessEnemies endlessEnemies, Spaceship spaceship) {
         this.endlessEnemies = endlessEnemies;
         this.spaceship = spaceship;
     }
 
-    // TODO: Criar método que irá detectar colisão entre objetos na tela
+    public boolean hasHit(){
 
-    public void collision(Canvas canvas){
+        for (Enemy enemy : endlessEnemies.getEnemies()){
+            //calcula a hipotenusa
+            double distance = Math.pow(spaceship.getY() - enemy.getY(), 2) +
+                    Math.pow(spaceship.getX() - enemy.getX(), 2);
+            distance = Math.sqrt(distance);
 
-        spaceship = new Spaceship(context, screenHelper);
-        endlessEnemies = new EndlessEnemies(screenHelper, x, y, radius);
+            double radiusSum = spaceship.getRADIUS() + enemy.getRadius();
 
-        //calcula a hipotenusa
-        distance = Math.pow(spaceship.getY() - endlessEnemies.getY(), 2) + Math.pow(spaceship.getX() - endlessEnemies.getX(), 2);
-        distance = Math.sqrt(distance);
+            //Log.i("Debug", String.format("h: %f s: %f", distance, radiusSum));
 
-        //verifica distancia entre os raios
-        if (distance <= spaceship.getRADIUS() + endlessEnemies.getRadius()){
-            gameover = true;
+            //verifica distancia entre os raios
+            if (distance <= radiusSum){
+                return true;
+            }
         }
+        return false;
     }
 
 }

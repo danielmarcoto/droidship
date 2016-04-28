@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -18,7 +19,6 @@ import android.view.View;
 public class DroidShip extends SurfaceView implements Runnable, View.OnTouchListener {
 
     private GestureDetector gestureDetector;
-    private Enemy enemy;
     private EndlessEnemies endlessEnemies;
     private Random random = new Random();
     private float x ;
@@ -50,9 +50,7 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
         screenHelper = new ScreenHelper(context);
 
-        enemy = new Enemy(x, y, radius);
-
-        endlessEnemies = new EndlessEnemies(screenHelper, x, y, radius);
+        endlessEnemies = new EndlessEnemies(context, screenHelper);
 
         control = new Control(context, screenHelper);
 
@@ -88,11 +86,12 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
             endlessEnemies.falling();
-            collisionDetector.collision(canvas);
-            if(collisionDetector.gameover){
-                break;
-            }
 
+            if (collisionDetector.hasHit()){
+                new Gameover(context, screenHelper).drawNode(canvas);
+
+                isRunning = false;
+            }
 
             holder.unlockCanvasAndPost(canvas);
         }

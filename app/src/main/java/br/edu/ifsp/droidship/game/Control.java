@@ -19,7 +19,7 @@ public class Control extends DrawObject
         this.context = context;
         this.screenHelper = screenHelper;
 
-        setY((screenHelper.getHeight() / 5) * 3);
+        setY((screenHelper.getHeight() / 5) * 4);
     }
 
     @Override

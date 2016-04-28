@@ -19,16 +19,12 @@ public class Spaceship extends DrawObject {
 
         this.screenHelper = screenHelper;
 
-        setY((screenHelper.getHeight() / 5) * 3);
+        setY((screenHelper.getHeight() / 5) * 4);
         setX(screenHelper.getWidth() / 2);
     }
 
     public static float getRADIUS() {
         return RADIUS;
-    }
-
-    public static void setRADIUS(float RADIUS) {
-        Spaceship.RADIUS = RADIUS;
     }
 
     @Override
@@ -45,12 +41,5 @@ public class Spaceship extends DrawObject {
 
     public boolean isOutOfScreenRight(){
         return (getX() + RADIUS) >= screenHelper.getWidth();
-    }
-
-    public boolean isOutOfScreen(){
-        if ((getX() - RADIUS) <= 0 ||
-                (getX() + RADIUS) >= screenHelper.getWidth())
-            return true;
-        return false;
     }
 }
