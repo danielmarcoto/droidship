@@ -12,30 +12,24 @@ import java.util.Random;
  */
 public class Star extends DrawObject {
 
-    private ScreenHelper screenHelper;
     private float radius;
     private float x;
     private float y;
     private float speed;
 
-    public Star(Context context, ScreenHelper screenHelper) {
+    public Star(Context context, float x, float y, float radius) {
         super(context);
-
-        this.screenHelper = screenHelper;
 
         Random random = new Random();
 
-        this.radius = random.nextInt(8) + 3;
-        this.x = random.nextInt(screenHelper.getWidth() - (int)radius) + radius;
-        this.speed = random.nextInt(6) + 1;
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speed = random.nextInt(3) + 1;
     }
 
     public void move(){
         y += speed;
-    }
-
-    public boolean isOutOfScreen(){
-        return (y + radius) > screenHelper.getHeight();
     }
 
     @Override

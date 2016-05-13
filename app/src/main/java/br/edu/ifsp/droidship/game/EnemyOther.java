@@ -1,25 +1,35 @@
 package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.util.Random;
+
+
 /**
- * Created by danielmarcoto on 12/05/16.
+ * Created by Eduardo on 19/04/2016.
  */
-public abstract class Enemy extends DrawObject {
+public class EnemyOther extends DrawObject {
+
+    private Random random = new Random();
     private float x;
     private float y;
+    private float radius;
     private Context context;
-    public static final float RADIUS = 30;
 
-    public Enemy(Context context, float x, float y) {
+    public EnemyOther(Context context, float x, float y, float radius) {
         super(context);
 
         this.context = context;
         this.setX(x);
         this.setY(y);
+        this.setRadius(radius);
+    }
+
+    public void falling(){
+        this.setY(this.getY() + random.nextInt(10 - 2) + 2);
     }
 
     public float getY() {
@@ -39,19 +49,18 @@ public abstract class Enemy extends DrawObject {
     }
 
     public float getRadius() {
-        return RADIUS;
+        return radius;
     }
 
-    public abstract Bitmap getBitmap();
-
-    public abstract void move();
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
 
     @Override
     public void drawNode(Canvas canvas) {
         Paint paint = new Paint();
+        paint.setColor(Color.RED);
 
-        Bitmap bitmap = Bitmap.createScaledBitmap(getBitmap(),150, 150, false);
-        
-        canvas.drawBitmap(bitmap, getX(), getY(), paint);
+        canvas.drawCircle(getX(), getY(), getRadius(), paint);
     }
 }

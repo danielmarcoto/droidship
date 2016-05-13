@@ -10,14 +10,13 @@ import android.widget.Toast;
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
 import br.edu.ifsp.droidship.game.DroidShip;
-import br.edu.ifsp.droidship.game.Score;
 
 public class MainActivity extends AppCompatActivity {
     private DataBase dataBase;
     private SQLiteDatabase conn;
     private ScoreRepository scoreRepository;
     private DroidShip droidShip;
-    private Score score;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

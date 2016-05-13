@@ -4,13 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import java.util.Random;
-
 import android.view.View;
 
 /**
@@ -28,6 +25,8 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
     private ScreenHelper screenHelper;
     private CollisionDetector collisionDetector;
     private BackgroundGame backgroundGame;
+    private Timer timer;
+    private Score score;
 
     private boolean isRunning;
 
@@ -60,6 +59,10 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
         collisionDetector = new CollisionDetector(endlessEnemies, spaceship);
 
         backgroundGame = new BackgroundGame(context, screenHelper);
+
+        timer = new Timer();
+
+        score = new Score(timer);
     }
 
     public void pause(){
@@ -83,9 +86,15 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
             spaceship.drawNode(canvas);
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
+            score.drawScore(canvas);
+
+            // Sorteia criação de inimigos
+            endlessEnemies.randomCreateEnemy(timer);
 
             endlessEnemies.falling();
             backgroundGame.move();
+
+            timer.increment();
 
             // Verifica se há colisão e encerra quando colide
             if (collisionDetector.hasHit()){

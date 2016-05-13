@@ -27,10 +27,8 @@ public class Control extends DrawObject
 
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
-        paint.setAlpha(8);
+        paint.setAlpha(20);
 
-        canvas.drawRect(0, getY(),
-                screenHelper.getWidth(),
-                screenHelper.getHeight(), paint);
+        canvas.drawCircle(screenHelper.getWidth()/2, screenHelper.getHeight() - 140, 80, paint);
     }
 }

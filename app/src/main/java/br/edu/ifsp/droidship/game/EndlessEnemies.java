@@ -12,31 +12,46 @@ import java.util.Random;
  */
 public class EndlessEnemies {
 
-    // TODO: Melhorar a forma de fortear a quantidade de inimigos por rodada
-
+    // TODO: Melhorar a forma de sortear a quantidade de inimigos por rodada
+    private static float y = 0;
     private final Context context;
     private ScreenHelper screenHelper;
     private Random random = new Random();
-    private float x;
-    private float radius = 30;
-    private static float y = 0;
-    private int enemiesQuant = random.nextInt(6 - 2) + 2;
-    private int enemiesDist = random.nextInt(100 - 50) + 50;
-    private final List<Enemy> enemyList = new ArrayList<Enemy>();
+
+    private final List<Enemy> enemyList;
 
     public EndlessEnemies(Context context, ScreenHelper screenHelper){
         this.context = context;
         this.screenHelper = screenHelper;
-
-        for (int i = 0; i < enemiesQuant; i++){
-            x += enemiesDist;
-            this.enemyList.add(new Enemy(context, x, y, radius));
-        }
+        this.enemyList = new ArrayList<>();
     }
 
     public void drawNode(Canvas canvas) {
         for (Enemy enemy : this.enemyList)
            enemy.drawNode(canvas);
+    }
+
+    public void randomCreateEnemy(Timer timer){
+        int score = (int)timer.getTimer();
+
+        if (random.nextInt(50 - score) == 0){
+
+            int enemyType = random.nextInt(2);
+
+            float x = random.nextInt(((int)Enemy.RADIUS) +
+                    screenHelper.getWidth() - ((int)Enemy.RADIUS) * 2);
+
+            float speed = score + 1;
+
+            Enemy enemy;
+
+            if (enemyType == 0){
+                enemy = new AsteroidEnemy(context, x, 1, speed, screenHelper);
+            } else {
+                enemy = new MeteorEnemy(context, x, 1, speed);
+            }
+            enemyList.add(enemy);
+        }
     }
 
     public void falling(){
@@ -45,15 +60,10 @@ public class EndlessEnemies {
 
         while (iterator.hasNext()){
             Enemy enemy = iterator.next();
-            enemy.falling();
+            enemy.move();
 
              if (enemy.getY() > screenHelper.getHeight()){
                  iterator.remove();
-                 Enemy anotherEnemy = new Enemy(context,
-                         random.nextInt(600) + enemiesDist,
-                         0,
-                         random.nextInt(50 - 20) + 20);
-                 iterator.add(anotherEnemy);
              }
         }
     }

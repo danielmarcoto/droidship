@@ -1,11 +1,7 @@
 package br.edu.ifsp.droidship.dataBase;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import br.edu.ifsp.droidship.game.Score;
 
 /**
  * Created by Eduardo on 07/05/2016.
@@ -17,12 +13,12 @@ public class ScoreRepository {
         this.conn = conn;
     }
 
-    public void addScore(Score score){
+    public void addScore(int score){
 
         ContentValues values = new ContentValues();
 
         //values.put("NOME"             ,      score.nome);
-        values.put("PONTOS"           ,      score.score);
+        values.put("PONTOS"           ,      score);
 
         conn.insertOrThrow("HIGHSCORE", null, values);
 
