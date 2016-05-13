@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private void save(){
 
         try {
-              scoreRepository.addScore(score);
+              //scoreRepository.addScore(score);
                 Toast.makeText(this, "Dados incluídos com sucesso", Toast.LENGTH_LONG).show();
 
             }catch(Exception ex){

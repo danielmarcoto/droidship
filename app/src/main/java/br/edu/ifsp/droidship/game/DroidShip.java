@@ -1,6 +1,7 @@
 package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -9,6 +10,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import br.edu.ifsp.droidship.ActivityScore;
+import br.edu.ifsp.droidship.MainActivity;
 
 /**
  * Created by danielmarcoto on 13/04/16.
@@ -101,6 +105,9 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
                 new Gameover(context, screenHelper).drawNode(canvas);
 
                 isRunning = false;
+
+                recordScore();
+
             }
 
             holder.unlockCanvasAndPost(canvas);
@@ -114,5 +121,11 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
             gestureDetector.onTouchEvent(motionEvent);
 
         return false;
+    }
+
+    public void recordScore(){
+        Context context = getContext();
+        context.startActivity(new Intent(context, ActivityScore.class));
+
     }
 }
