@@ -20,8 +20,9 @@ public class ScoreRepository {
 
     public ArrayAdapter<String> findScore(Context context){
         ArrayAdapter<String> adpScore = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
-        Cursor cursor = conn.query("HIGHSCORE", null, null, null, null, null, "PONTOS");
+        Cursor cursor = conn.query("HIGHSCORE", null, null, null, null, null, null);
         if (cursor.getCount() > 0){
+            cursor.moveToFirst();
             do {
                 String nome = cursor.getString(1);
                 adpScore.add(nome);
@@ -30,12 +31,12 @@ public class ScoreRepository {
         return adpScore;
     }
 
-    public void addScore(Score score){
+    public void addScore(){
 
         ContentValues values = new ContentValues();
 
-        //values.put("NOME"             , score.nome);
-        //values.put("PONTOS"           , score.getScore());
+        values.put("NOME", "Eduardo");
+        //values.put("PONTOS"           , 10000);
 
         conn.insertOrThrow("HIGHSCORE", null, values);
 

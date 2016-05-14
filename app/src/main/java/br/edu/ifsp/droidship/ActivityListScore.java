@@ -25,11 +25,22 @@ public class ActivityListScore extends AppCompatActivity {
         setContentView(R.layout.activitylistscore);
 
         lstScore = (ListView) findViewById(R.id.lstScore);
-        dataBase = new DataBase(this);
-        conn = dataBase.getWritableDatabase();
 
-        scoreRepository = new ScoreRepository(conn);
-        adpScore = scoreRepository.findScore(this);
+        try {
+            dataBase = new DataBase(this);
+            conn = dataBase.getWritableDatabase();
+            scoreRepository = new ScoreRepository(conn);
+            scoreRepository.addScore();
+            adpScore = scoreRepository.findScore(this);
+            lstScore.setAdapter(adpScore);
+
+        }catch (SQLException ex){
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setMessage("Erro na conexão");
+            dlg.setNeutralButton("Ok", null);
+            dlg.show();
+
+        }
 
     }
 }

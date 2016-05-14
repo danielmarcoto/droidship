@@ -24,10 +24,6 @@ public class ActivityScore extends Activity implements View.OnClickListener {
     private Button btnInserir;
     private Button btnPlayAgain;
     private Button btnSair;
-    private DataBase dataBase;
-    private SQLiteDatabase conn;
-    private ScoreRepository scoreRepository;
-    private Score score ;
 
 
     @Override
@@ -46,23 +42,6 @@ public class ActivityScore extends Activity implements View.OnClickListener {
         btnSair.setOnClickListener(this);
     }
 
-    private void save(){
-
-        try {
-            scoreRepository.addScore(score);
-            Toast.makeText(this, "Dados incluídos com sucesso", Toast.LENGTH_LONG).show();
-
-        }catch(Exception ex){
-
-            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
-            dlg.setMessage("Erro ao inserir os dados: "+ex.getMessage());
-            dlg.setNeutralButton("OK", null);
-            dlg.show();
-        }
-
-    }
-
-
     @Override
     public void onClick(View v) {
 
@@ -70,7 +49,6 @@ public class ActivityScore extends Activity implements View.OnClickListener {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }else if( v == btnInserir){
-            save();
             Intent intent = new Intent(this, ActivityListScore.class);
             startActivity(intent);
         }else{

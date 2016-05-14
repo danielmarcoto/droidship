@@ -69,20 +69,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void save(){
-
-        try {
-              //scoreRepository.addScore(score);
-                Toast.makeText(this, "Dados incluídos com sucesso", Toast.LENGTH_LONG).show();
-
-            }catch(Exception ex){
-
-               AlertDialog.Builder dlg = new AlertDialog.Builder(this);
-               dlg.setMessage("Erro ao inserir os dados: "+ex.getMessage());
-               dlg.setNeutralButton("OK", null);
-               dlg.show();
-        }
-
-    }
 
 }
