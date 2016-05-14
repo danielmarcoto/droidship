@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase conn;
     private ScoreRepository scoreRepository;
     private DroidShip droidShip;
-    private int score;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

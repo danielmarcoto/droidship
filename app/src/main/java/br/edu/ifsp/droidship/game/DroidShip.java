@@ -106,7 +106,7 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
                 isRunning = false;
 
-                recordScore();
+                recordScore();//abre a tela de cadastro do recorde
 
             }
 

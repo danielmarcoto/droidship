@@ -4,8 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.ViewDebug;
 import android.widget.ArrayAdapter;
 
+import br.edu.ifsp.droidship.ActivityScore;
 import br.edu.ifsp.droidship.game.Score;
 
 /**
@@ -24,7 +27,7 @@ public class ScoreRepository {
         if (cursor.getCount() > 0){
             cursor.moveToFirst();
             do {
-                String nome = cursor.getString(1);
+                String nome = cursor.getString(1); //Todo: listar também o score
                 adpScore.add(nome);
             }while (cursor.moveToNext());
         }
@@ -33,10 +36,10 @@ public class ScoreRepository {
 
     public void addScore(){
 
+
         ContentValues values = new ContentValues();
 
-        values.put("NOME", "Eduardo");
-        //values.put("PONTOS"           , 10000);
+        values.put("NOME", "Eduardo" ); //Todo: buscar o valor nome e score na caixa de texto e no placar
 
         conn.insertOrThrow("HIGHSCORE", null, values);
 
