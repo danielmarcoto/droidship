@@ -11,7 +11,7 @@ public class ScriptSQL {
         SQLBuilder.append("_id       INTEGER         NOT NULL ");
         SQLBuilder.append("PRIMARY KEY AUTOINCREMENT, ");
         SQLBuilder.append("NOME         VARCHAR(50), ");
-        SQLBuilder.append("PONTOS       INTEGER ");
+        SQLBuilder.append("PONTOS       VARCHAR(20) ");
         SQLBuilder.append(");");
 
         return SQLBuilder.toString();

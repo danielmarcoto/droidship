@@ -1,5 +1,7 @@
 package br.edu.ifsp.droidship;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +12,7 @@ import android.widget.ListView;
 
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
+import br.edu.ifsp.droidship.game.Score;
 
 public class ActivityListScore extends AppCompatActivity {
 
@@ -18,11 +21,17 @@ public class ActivityListScore extends AppCompatActivity {
     private SQLiteDatabase conn;
     private ArrayAdapter<String> adpScore;
     private ScoreRepository scoreRepository;
+    private String nome;
+    private String score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylistscore);
+
+        Intent intent = getIntent();
+        nome = intent.getStringExtra("NOME");
+        score = intent.getStringExtra("SCORE");
 
         lstScore = (ListView) findViewById(R.id.lstScore);
 
@@ -30,7 +39,7 @@ public class ActivityListScore extends AppCompatActivity {
             dataBase = new DataBase(this);
             conn = dataBase.getWritableDatabase();
             scoreRepository = new ScoreRepository(conn);
-            scoreRepository.addScore();
+            addScore();
             adpScore = scoreRepository.findScore(this);
             lstScore.setAdapter(adpScore);
 
@@ -39,8 +48,18 @@ public class ActivityListScore extends AppCompatActivity {
             dlg.setMessage("Erro na conexão");
             dlg.setNeutralButton("Ok", null);
             dlg.show();
-
         }
+    }
+
+    public void addScore(){
+
+        ContentValues values = new ContentValues();
+
+        values.put("NOME", nome );
+        values.put("PONTOS", score );
+
+        conn.insertOrThrow("HIGHSCORE", null, values);
 
     }
+
 }

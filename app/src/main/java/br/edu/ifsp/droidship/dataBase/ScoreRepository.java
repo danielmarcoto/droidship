@@ -27,22 +27,13 @@ public class ScoreRepository {
         if (cursor.getCount() > 0){
             cursor.moveToFirst();
             do {
-                String nome = cursor.getString(1); //Todo: listar também o score
+                String nome = cursor.getString(1);
                 adpScore.add(nome);
+                String score = cursor.getString(2);
+                adpScore.add(score);
             }while (cursor.moveToNext());
         }
         return adpScore;
-    }
-
-    public void addScore(){
-
-
-        ContentValues values = new ContentValues();
-
-        values.put("NOME", "Eduardo" ); //Todo: buscar o valor nome e score na caixa de texto e no placar
-
-        conn.insertOrThrow("HIGHSCORE", null, values);
-
     }
 
 }
