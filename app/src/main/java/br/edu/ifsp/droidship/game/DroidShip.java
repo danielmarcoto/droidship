@@ -25,7 +25,6 @@ public class DroidShip extends SurfaceView implements Runnable,
 
     private GestureDetector gestureDetector;
     private EndlessEnemies endlessEnemies;
-    private Context context;
     private Spaceship spaceship;
     private Control control;
     private ScreenHelper screenHelper;
@@ -35,7 +34,7 @@ public class DroidShip extends SurfaceView implements Runnable,
     private Score score;
     private Explosions explosions;
     private Sound sound;
-    public int totalScore;
+    private Context context;
 
 
     private boolean isRunning;
@@ -140,8 +139,11 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         // TODO: Passar para a próxima activity a pontuação atual
 
-        Context context = getContext();
-        context.startActivity(new Intent(context, ActivityScore.class));
+        Intent intent = new Intent(context, ActivityScore.class);
+        intent.putExtra("SCORE", score.getScore());
+        context.startActivity(intent);
+        //Context context = getContext();
+        //context.startActivity(new Intent(context, ActivityScore.class));
 
     }
 

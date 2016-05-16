@@ -28,6 +28,7 @@ public class ActivityScore extends Activity implements View.OnClickListener {
     private Button btnPlayAgain;
     private Button btnSair;
     private Score score;
+    private int totalScore;
 
 
     @Override
@@ -45,8 +46,13 @@ public class ActivityScore extends Activity implements View.OnClickListener {
         btnInserir.setOnClickListener(this);
         btnSair.setOnClickListener(this);
 
-        score = new Score();
-        edtScore.setText(Integer.toString(score.getScore())); //Todo:
+        Intent intent = getIntent();
+        totalScore = intent.getIntExtra("SCORE", 0);
+
+        edtScore.setText(Integer.toString(totalScore));
+
+        //score = new Score();
+        //edtScore.setText(Integer.toString(score.getScore())); //Todo:
     }
 
     @Override
