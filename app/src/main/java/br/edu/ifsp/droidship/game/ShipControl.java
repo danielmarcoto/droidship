@@ -26,7 +26,13 @@ public class ShipControl extends GestureDetector.SimpleOnGestureListener {
         if (!spaceship.isOutOfScreenRight() && spaceship.getX() < newX)
             spaceship.setX(newX);
 
-        spaceship.setY(newY);
+        if (!spaceship.isOutOfScreenTop() && spaceship.getY() > newY)
+            spaceship.setY(newY);
+
+        if (!spaceship.isOutOfScreenBottom() && spaceship.getY() < newY)
+            spaceship.setY(newY);
+
+        //spaceship.setY(newY);
 
         return super.onScroll(e1, e2, distanceX, distanceY);
     }

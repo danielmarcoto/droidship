@@ -27,7 +27,7 @@ public class Spaceship extends DrawObject {
 
         setY(((screenHelper.getHeight() / 5) * 3) + 100);
         setX(screenHelper.getWidth() / 2);
-        this.alpha = 100;
+        this.alpha = 200;
     }
 
     public static float getRADIUS() {
@@ -54,5 +54,13 @@ public class Spaceship extends DrawObject {
 
     public boolean isOutOfScreenRight(){
         return (getX() + RADIUS) >= screenHelper.getWidth();
+    }
+
+    public boolean isOutOfScreenTop(){
+        return (getY() - RADIUS) <= 0;
+    }
+
+    public boolean isOutOfScreenBottom(){
+        return (getY() + (RADIUS * 2)) >= screenHelper.getHeight();
     }
 }

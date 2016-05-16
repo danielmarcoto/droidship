@@ -62,8 +62,8 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         spaceship = new Spaceship(context, screenHelper);
 
+        // Detector de gestos complexos
         GestureDetector.SimpleOnGestureListener gestureListener = new ShipControl(spaceship);
-
         gestureDetector = new GestureDetector(context, gestureListener);
 
         collisionDetector = new CollisionDetector(endlessEnemies, spaceship);
@@ -87,7 +87,7 @@ public class DroidShip extends SurfaceView implements Runnable,
     public void resume(){
         isRunning = true;
 
-        //sound.playBackgroundSound();
+        sound.playBackgroundSound();
     }
 
     @Override
@@ -149,16 +149,17 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             isRunning = false;
 
-            //recordScore();
+            recordScore();
         }
     }
 
     @Override
     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-        Log.i("Debug", "onLoadComplete");
-
-        if (i == Sound.BACKGROUND_GAME) {
-            soundPool.play(Sound.BACKGROUND_GAME, 0.5f, 0.5f, 0, 1, 1);
+        if (i == Sound.NEW_ENEMY) {
+            Log.i("Debug", "onLoadComplete: NEW_ENEMY");
+        }
+        if (i == Sound.SPACESHIP_EXPLODE) {
+            Log.i("Debug", "onLoadComplete: SPACESHIP_EXPLODE");
         }
     }
 }
