@@ -13,14 +13,17 @@ public class Sound {
     private SoundPool soundPool;
 
     public static int SPACESHIP_EXPLODE;
+    public static int NEW_ENEMY;
     public static int BACKGROUND_GAME;
 
-    public Sound(Context context){
-        this.soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+    public Sound(Context context, SoundPool.OnLoadCompleteListener delegate){
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        soundPool.setOnLoadCompleteListener(delegate);
 
-        BACKGROUND_GAME = this.soundPool.load(context, R.raw.music1, 2);
+        BACKGROUND_GAME = this.soundPool.load(context, R.raw.music2, 2);
 
-        SPACESHIP_EXPLODE = this.soundPool.load(context, R.raw.explosion1, 1);
+        SPACESHIP_EXPLODE = soundPool.load(context, R.raw.explosion2, 2);
+        NEW_ENEMY = soundPool.load(context, R.raw.new_enemy, 1);
 
         //soundPool.play(BACKGROUND_GAME, 1, 1, 0, 1, 1);
         //soundPool.pause(BACKGROUND_GAME);

@@ -16,13 +16,15 @@ public class EndlessEnemies {
     private static float y = 0;
     private final Context context;
     private ScreenHelper screenHelper;
+    private Sound sound;
     private Random random = new Random();
 
     private final List<Enemy> enemyList;
 
-    public EndlessEnemies(Context context, ScreenHelper screenHelper){
+    public EndlessEnemies(Context context, ScreenHelper screenHelper, Sound sound){
         this.context = context;
         this.screenHelper = screenHelper;
+        this.sound = sound;
         this.enemyList = new ArrayList<>();
     }
 
@@ -50,6 +52,7 @@ public class EndlessEnemies {
             } else {
                 enemy = new MeteorEnemy(context, x, 1, speed);
             }
+            sound.playEffect(Sound.NEW_ENEMY);
             enemyList.add(enemy);
         }
     }

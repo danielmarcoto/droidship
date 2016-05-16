@@ -54,9 +54,9 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         screenHelper = new ScreenHelper(context);
 
-        sound = new Sound(context);
+        sound = new Sound(context, this);
 
-        endlessEnemies = new EndlessEnemies(context, screenHelper);
+        endlessEnemies = new EndlessEnemies(context, screenHelper, sound);
 
         control = new Control(context, screenHelper);
 
@@ -74,7 +74,8 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         score = new Score(timer);
 
-        explosions = new Explosions(context, this);
+        explosions = new Explosions(context, sound);
+        explosions.setDelegate(this);
     }
 
     public void pause(){
@@ -116,7 +117,6 @@ public class DroidShip extends SurfaceView implements Runnable,
             // Verifica se há colisão e encerra quando colide
             if (collisionDetector.hasHit()){
                 explosions.addExplosion(spaceship);
-                sound.playEffect(Sound.SPACESHIP_EXPLODE);
                 spaceship.setAlpha(0);
             }
 
@@ -156,6 +156,9 @@ public class DroidShip extends SurfaceView implements Runnable,
     @Override
     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
         Log.i("Debug", "onLoadComplete");
-        soundPool.play(Sound.BACKGROUND_GAME, 1, 1, 0, 1, 1);
+
+        if (i == Sound.BACKGROUND_GAME) {
+            soundPool.play(Sound.BACKGROUND_GAME, 0.5f, 0.5f, 0, 1, 1);
+        }
     }
 }

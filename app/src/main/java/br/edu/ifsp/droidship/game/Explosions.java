@@ -13,20 +13,28 @@ public class Explosions extends DrawObject {
     private Context context;
     private HashMap<DrawObject, Explosion> explosionHashMap;
     private ExplosionDelegate delegate;
+    private Sound sound;
 
-    public Explosions(Context context, ExplosionDelegate delegate){
+    public Explosions(Context context, Sound sound){
         super(context);
 
         this.context = context;
+        this.sound = sound;
         this.explosionHashMap = new HashMap<>();
+    }
+
+    public void setDelegate(ExplosionDelegate delegate){
         this.delegate = delegate;
     }
 
     public void addExplosion(DrawObject objectExploded){
         Explosion explosion = new Explosion(this.context,
                 objectExploded.getX(), objectExploded.getY());
-        if (!explosionHashMap.containsKey(objectExploded))
+
+        if (!explosionHashMap.containsKey(objectExploded)) {
             explosionHashMap.put(objectExploded, explosion);
+            sound.playEffect(Sound.SPACESHIP_EXPLODE);
+        }
     }
 
     @Override
