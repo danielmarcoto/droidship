@@ -2,6 +2,7 @@ package br.edu.ifsp.droidship;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,7 +13,9 @@ import android.widget.Toast;
 
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
+import br.edu.ifsp.droidship.game.DroidShip;
 import br.edu.ifsp.droidship.game.Score;
+import br.edu.ifsp.droidship.game.Timer;
 
 /**
  * Created by Eduardo on 13/05/2016.
@@ -42,7 +45,8 @@ public class ActivityScore extends Activity implements View.OnClickListener {
         btnInserir.setOnClickListener(this);
         btnSair.setOnClickListener(this);
 
-        //edtScore.setText(score.getScore());//Todo: se descomentar dá erro aqui, é a ultima coisa que falta
+        score = new Score();
+        edtScore.setText(Integer.toString(score.getScore())); //Todo:
     }
 
     @Override

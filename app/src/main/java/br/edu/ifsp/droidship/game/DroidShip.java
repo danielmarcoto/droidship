@@ -35,6 +35,8 @@ public class DroidShip extends SurfaceView implements Runnable,
     private Score score;
     private Explosions explosions;
     private Sound sound;
+    public int totalScore;
+
 
     private boolean isRunning;
 
@@ -118,6 +120,7 @@ public class DroidShip extends SurfaceView implements Runnable,
             if (collisionDetector.hasHit()){
                 explosions.addExplosion(spaceship);
                 spaceship.setAlpha(0);
+
             }
 
             holder.unlockCanvasAndPost(canvas);

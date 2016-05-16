@@ -23,7 +23,7 @@ public class ScoreRepository {
 
     public ArrayAdapter<String> findScore(Context context){
         ArrayAdapter<String> adpScore = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
-        Cursor cursor = conn.query("HIGHSCORE", null, null, null, null, null, null);
+        Cursor cursor = conn.query("HIGHSCORE", null, null, null, null, null, "PONTOS");
         if (cursor.getCount() > 0){
             cursor.moveToFirst();
             do {

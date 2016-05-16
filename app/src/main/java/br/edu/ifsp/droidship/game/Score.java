@@ -15,6 +15,10 @@ public class Score {
         this.timer = timer;
     }
 
+    public Score() {
+
+    }
+
     public void drawScore (Canvas canvas){
 
         setScore((int)(timer.getTimer() * 10));
