@@ -137,13 +137,9 @@ public class DroidShip extends SurfaceView implements Runnable,
 
     public void recordScore(){
 
-        // TODO: Passar para a próxima activity a pontuação atual
-
         Intent intent = new Intent(context, ActivityScore.class);
         intent.putExtra("SCORE", score.getScore());
         context.startActivity(intent);
-        //Context context = getContext();
-        //context.startActivity(new Intent(context, ActivityScore.class));
 
     }
 
