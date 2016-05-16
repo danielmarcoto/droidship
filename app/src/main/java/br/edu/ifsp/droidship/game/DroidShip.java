@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.media.SoundPool;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,12 +14,12 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import br.edu.ifsp.droidship.ActivityScore;
-import br.edu.ifsp.droidship.MainActivity;
 
 /**
  * Created by danielmarcoto on 13/04/16.
  */
-public class DroidShip extends SurfaceView implements Runnable, View.OnTouchListener {
+public class DroidShip extends SurfaceView implements Runnable,
+        View.OnTouchListener, ExplosionDelegate, SoundPool.OnLoadCompleteListener {
 
     private final SurfaceHolder holder = getHolder();
 
@@ -31,6 +33,8 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
     private BackgroundGame backgroundGame;
     private Timer timer;
     private Score score;
+    private Explosions explosions;
+    private Sound sound;
 
     private boolean isRunning;
 
@@ -50,6 +54,8 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
         screenHelper = new ScreenHelper(context);
 
+        sound = new Sound(context);
+
         endlessEnemies = new EndlessEnemies(context, screenHelper);
 
         control = new Control(context, screenHelper);
@@ -67,14 +73,20 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
         timer = new Timer();
 
         score = new Score(timer);
+
+        explosions = new Explosions(context, this);
     }
 
     public void pause(){
         isRunning = false;
+
+        sound.pauseBackgroundSound();
     }
 
     public void resume(){
         isRunning = true;
+
+        //sound.playBackgroundSound();
     }
 
     @Override
@@ -91,6 +103,7 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
             score.drawScore(canvas);
+            explosions.drawNode(canvas);
 
             // Sorteia criação de inimigos
             endlessEnemies.randomCreateEnemy(timer);
@@ -102,12 +115,9 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
 
             // Verifica se há colisão e encerra quando colide
             if (collisionDetector.hasHit()){
-                new Gameover(context, screenHelper).drawNode(canvas);
-
-                isRunning = false;
-
-                recordScore();//abre a tela de cadastro do recorde
-
+                explosions.addExplosion(spaceship);
+                sound.playEffect(Sound.SPACESHIP_EXPLODE);
+                spaceship.setAlpha(0);
             }
 
             holder.unlockCanvasAndPost(canvas);
@@ -124,8 +134,28 @@ public class DroidShip extends SurfaceView implements Runnable, View.OnTouchList
     }
 
     public void recordScore(){
+
+        // TODO: Passar para a próxima activity a pontuação atual
+
         Context context = getContext();
         context.startActivity(new Intent(context, ActivityScore.class));
 
+    }
+
+    @Override
+    public void explosionHasEnded(boolean isSpaceship) {
+        if (isSpaceship){
+            // new Gameover(context, screenHelper).drawNode(canvas);
+
+            isRunning = false;
+
+            //recordScore();
+        }
+    }
+
+    @Override
+    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+        Log.i("Debug", "onLoadComplete");
+        soundPool.play(Sound.BACKGROUND_GAME, 1, 1, 0, 1, 1);
     }
 }

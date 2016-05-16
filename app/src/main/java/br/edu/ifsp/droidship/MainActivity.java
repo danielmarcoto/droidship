@@ -5,7 +5,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         droidShip = (DroidShip) findViewById(R.id.droidship);
 
+
+
         try {
             dataBase = new DataBase(this);
             conn = dataBase.getWritableDatabase();
@@ -41,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+
+        Log.i("Debug", "Memory alert in " + level);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class Spaceship extends DrawObject {
 
     private ScreenHelper screenHelper;
     private Context context;
+    private int alpha;
 
     public Spaceship(Context context, ScreenHelper screenHelper){
         super(context);
@@ -26,15 +27,21 @@ public class Spaceship extends DrawObject {
 
         setY(((screenHelper.getHeight() / 5) * 3) + 100);
         setX(screenHelper.getWidth() / 2);
+        this.alpha = 100;
     }
 
     public static float getRADIUS() {
         return RADIUS;
     }
 
+    public void setAlpha(int alpha){
+        this.alpha = alpha;
+    }
+
     @Override
     public void drawNode(Canvas canvas) {
         Paint paint = new Paint();
+        paint.setAlpha(alpha);
 
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.spaceship);
         bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
