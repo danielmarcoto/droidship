@@ -4,25 +4,26 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 import br.edu.ifsp.droidship.dataBase.DataBase;
+import br.edu.ifsp.droidship.dataBase.ScoreAdapter;
+import br.edu.ifsp.droidship.dataBase.ScoreModel;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
-import br.edu.ifsp.droidship.game.Score;
 
 public class ActivityListScore extends AppCompatActivity {
 
     private ListView lstScore;
     private DataBase dataBase;
     private SQLiteDatabase conn;
-    private ArrayAdapter<String> adpScore;
-    private ScoreRepository scoreRepository;
     private String nome;
     private String score;
+    private List<ScoreModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +31,21 @@ public class ActivityListScore extends AppCompatActivity {
         setContentView(R.layout.activitylistscore);
 
         Intent intent = getIntent();
+
         nome = intent.getStringExtra("NOME");
         score = intent.getStringExtra("SCORE");
-
-        lstScore = (ListView) findViewById(R.id.lstScore);
 
         try {
             dataBase = new DataBase(this);
             conn = dataBase.getWritableDatabase();
-            scoreRepository = new ScoreRepository(conn);
+            ScoreRepository scoreRepository = new ScoreRepository(conn);
             addScore();
-            adpScore = scoreRepository.findScore(this);
-            lstScore.setAdapter(adpScore);
+
+            list = scoreRepository.listAll();
+
+            //adpScore = scoreRepository.findScore(this);
+            //lstScore.setAdapter(adpScore);
+
 
         }catch (SQLException ex){
             AlertDialog.Builder dlg = new AlertDialog.Builder(this);
@@ -49,6 +53,9 @@ public class ActivityListScore extends AppCompatActivity {
             dlg.setNeutralButton("Ok", null);
             dlg.show();
         }
+
+        lstScore = (ListView) findViewById(R.id.lstScore);
+        lstScore.setAdapter(new ScoreAdapter(this, list));
     }
 
     public void addScore(){
@@ -61,5 +68,6 @@ public class ActivityListScore extends AppCompatActivity {
         conn.insertOrThrow("HIGHSCORE", null, values);
 
     }
+
 
 }

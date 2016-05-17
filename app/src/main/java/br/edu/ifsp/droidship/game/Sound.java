@@ -18,7 +18,7 @@ public class Sound {
     public static int NEW_ENEMY;
 
     public Sound(Context context, SoundPool.OnLoadCompleteListener delegate){
-        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        soundPool = new SoundPool(30, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(delegate);
 
         // Efeitos sonoros do jogo

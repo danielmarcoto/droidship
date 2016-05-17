@@ -2,6 +2,7 @@ package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -12,8 +13,6 @@ import java.util.Random;
  */
 public class EndlessEnemies {
 
-    // TODO: Melhorar a forma de sortear a quantidade de inimigos por rodada
-    private static float y = 0;
     private final Context context;
     private ScreenHelper screenHelper;
     private Sound sound;
@@ -36,14 +35,18 @@ public class EndlessEnemies {
     public void randomCreateEnemy(Timer timer){
         int score = (int)timer.getTimer();
 
-        if (random.nextInt(50 - score) == 0){
+        if (score > 30) score = 30;
+
+        if (random.nextInt(40 - score) == 0){
 
             int enemyType = random.nextInt(2);
 
             float x = random.nextInt(((int)Enemy.RADIUS) +
                     screenHelper.getWidth() - ((int)Enemy.RADIUS) * 2);
 
-            float speed = score + 1;
+            if (score <= 0) score = 1;
+
+            float speed = random.nextInt(score) + 1;
 
             Enemy enemy;
 

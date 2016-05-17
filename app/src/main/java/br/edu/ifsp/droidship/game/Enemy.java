@@ -12,7 +12,7 @@ public abstract class Enemy extends DrawObject {
     private float x;
     private float y;
     private Context context;
-    public static final float RADIUS = 30;
+    public static final float RADIUS = 35;
 
     public Enemy(Context context, float x, float y) {
         super(context);

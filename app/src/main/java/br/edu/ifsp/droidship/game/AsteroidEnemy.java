@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.util.Random;
+
 import br.edu.ifsp.droidship.R;
 
 /**
@@ -14,7 +16,8 @@ public class AsteroidEnemy extends Enemy {
     private float speed;
     private Context context;
     private ScreenHelper screenHelper;
-    private boolean isGoingRight = true;
+    private boolean isGoingRight;
+    private float speedX;
 
     public AsteroidEnemy(Context context, float x, float y, float speed, ScreenHelper screenHelper) {
         super(context, x, y);
@@ -22,6 +25,11 @@ public class AsteroidEnemy extends Enemy {
         this.context = context;
         this.speed = speed;
         this.screenHelper = screenHelper;
+
+        Random random = new Random();
+
+        this.isGoingRight = random.nextInt(2) == 0;
+        this.speedX = random.nextInt(7) + 3;
     }
 
     @Override
@@ -37,9 +45,9 @@ public class AsteroidEnemy extends Enemy {
         setY(y + speed);
 
         if (isGoingRight){
-            setX(x + speed);
+            setX(x + speedX);
         } else {
-            setX(x - speed);
+            setX(x - speedX);
         }
 
         // Alterar a direção do movimento

@@ -13,7 +13,7 @@ import br.edu.ifsp.droidship.R;
  */
 public class Spaceship extends DrawObject {
 
-    private static float RADIUS = 80;
+    private static float RADIUS = 70;
 
     private ScreenHelper screenHelper;
     private Context context;

@@ -1,19 +1,24 @@
 package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
+import br.edu.ifsp.droidship.R;
+
 /**
  * Created by danielmarcoto on 28/04/16.
  */
 public class BackgroundGame extends DrawObject {
 
-    private static final int TOTAL = 30;
+    private static final int TOTAL = 40;
 
     private ScreenHelper screenHelper;
     private List<Star> stars;
@@ -61,6 +66,13 @@ public class BackgroundGame extends DrawObject {
 
     @Override
     public void drawNode(Canvas canvas) {
+        Paint paint = new Paint();
+
+        // Inclusão da imagem
+        Bitmap bitmap = BitmapFactory.decodeResource(
+                context.getResources(), R.drawable.background1);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+
         for (Star star : stars){
             star.drawNode(canvas);
         }
