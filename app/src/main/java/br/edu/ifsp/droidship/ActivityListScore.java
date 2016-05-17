@@ -40,12 +40,12 @@ public class ActivityListScore extends AppCompatActivity {
             dataBase = new DataBase(this);
             conn = dataBase.getWritableDatabase();
             ScoreRepository scoreRepository = new ScoreRepository(conn);
-            addScore();
+
+            // Salva apenas se não for vazio a pontuação
+            if (score != null && !score.isEmpty())
+                addScore();
 
             list = scoreRepository.listAll();
-
-            //adpScore = scoreRepository.findScore(this);
-            //lstScore.setAdapter(adpScore);
 
 
         }catch (SQLException ex){
@@ -62,7 +62,7 @@ public class ActivityListScore extends AppCompatActivity {
     }
 
     public void backButton(View view) {
-        Intent intent = new Intent(getBaseContext(), ActivityScore.class);
+        Intent intent = new Intent(getBaseContext(), MenuActivity.class);
         startActivity(intent);
     }
 

@@ -3,7 +3,6 @@ package br.edu.ifsp.droidship.game;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -36,7 +35,6 @@ public class DroidShip extends SurfaceView implements Runnable,
     private Sound sound;
     private Context context;
 
-
     private boolean isRunning;
 
     public DroidShip(Context context, AttributeSet attributeSet){
@@ -44,7 +42,6 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         this.context = context;
 
-        setFocusable(true);
         setClickable(true);
         setOnTouchListener(this);
 
@@ -98,13 +95,11 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             Canvas canvas = holder.lockCanvas();
 
-            canvas.drawColor(Color.BLACK);
-
             backgroundGame.drawNode(canvas);
-            spaceship.drawNode(canvas);
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
             score.drawScore(canvas);
+            spaceship.drawNode(canvas);
             explosions.drawNode(canvas);
 
             // Sorteia criação de inimigos
@@ -113,13 +108,13 @@ public class DroidShip extends SurfaceView implements Runnable,
             endlessEnemies.falling();
             backgroundGame.move();
 
-            timer.increment();
+            timer.incrementIfAble();
 
             // Verifica se há colisão e encerra quando colide
             if (collisionDetector.hasHit()){
                 explosions.addExplosion(spaceship);
                 spaceship.setAlpha(0);
-
+                timer.stop();
             }
 
             holder.unlockCanvasAndPost(canvas);
@@ -136,17 +131,15 @@ public class DroidShip extends SurfaceView implements Runnable,
     }
 
     public void recordScore(){
-
         Intent intent = new Intent(context, ActivityScore.class);
         intent.putExtra("SCORE", score.getScore());
         context.startActivity(intent);
-
     }
 
     @Override
     public void explosionHasEnded(boolean isSpaceship) {
+        // Quando for colisão da nave principal termina o jogo
         if (isSpaceship){
-            // new Gameover(context, screenHelper).drawNode(canvas);
 
             isRunning = false;
 

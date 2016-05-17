@@ -35,7 +35,7 @@ public class BackgroundGame extends DrawObject {
 
         for (int i = 0; i < TOTAL; i++){
 
-            float radius = random.nextInt(3) + 1;
+            float radius = random.nextInt(3) + 2;
             float x = random.nextInt(screenHelper.getWidth() - (int)radius) + radius;
             float y = random.nextInt(screenHelper.getHeight() - (int)radius) + radius;
 
@@ -54,7 +54,7 @@ public class BackgroundGame extends DrawObject {
             if (star.getY() >= screenHelper.getHeight()){
                 iterator.remove();
 
-                float radius = random.nextInt(3) + 1;
+                float radius = random.nextInt(3) + 2;
                 float x = random.nextInt(screenHelper.getWidth() - (int)radius) + radius;
 
                 Star starNew = new Star(context, x, 0, radius);

@@ -1,21 +1,11 @@
 package br.edu.ifsp.droidship;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import br.edu.ifsp.droidship.dataBase.DataBase;
-import br.edu.ifsp.droidship.dataBase.ScoreRepository;
-import br.edu.ifsp.droidship.game.DroidShip;
-import br.edu.ifsp.droidship.game.Score;
-import br.edu.ifsp.droidship.game.Timer;
 
 /**
  * Created by Eduardo on 13/05/2016.
@@ -49,6 +39,9 @@ public class ActivityScore extends Activity implements View.OnClickListener {
         totalScore = intent.getIntExtra("SCORE", 0);
 
         edtScore.setText(Integer.toString(totalScore));
+
+        // Omitir o botão sair
+        btnSair.setVisibility(View.INVISIBLE);
 
     }
 

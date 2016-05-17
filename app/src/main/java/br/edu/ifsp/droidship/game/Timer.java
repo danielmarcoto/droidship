@@ -5,16 +5,23 @@ package br.edu.ifsp.droidship.game;
  */
 public class Timer {
     private double timer;
+    private boolean isRunning;
 
     public Timer(){
         timer = 0;
+        isRunning = true;
     }
 
-    public void increment(){
-        timer += 0.1;
+    public void incrementIfAble(){
+        if (isRunning)
+            timer += 0.1;
     }
 
     public double getTimer(){
         return timer;
+    }
+
+    public void stop(){
+        isRunning = false;
     }
 }
