@@ -17,4 +17,9 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
     }
+
+    public void highScore(View view) {
+        Intent intent = new Intent(getBaseContext(), ActivityListScore.class);
+        startActivity(intent);
+    }
 }

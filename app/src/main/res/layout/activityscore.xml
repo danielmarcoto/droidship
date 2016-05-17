@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#232222">
+    android:background="#232222"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="fill_parent"
@@ -20,7 +21,7 @@
         android:text="@string/edtNome"
         android:ems="10"
         android:id="@+id/editText"
-        android:layout_weight="0" />
+        android:layout_weight="0.10" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -29,7 +30,8 @@
         android:text="Este é o seu placar"
         android:id="@+id/textView2"
         android:background="#d00e0e"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_weight="0.07" />
 
     <EditText
         android:layout_width="match_parent"
@@ -39,26 +41,31 @@
         android:id="@+id/editText2"
         android:text="@string/edtScore"
         android:textAlignment="center"
-        android:background="#1625bf" />
+        android:background="#1625bf"
+        android:height="80dp"
+        android:layout_weight="0.14" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Inserir Score"
         android:id="@+id/btnInserir"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:height="80dp" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Jogar novamente"
         android:id="@+id/btnPlayAgain"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:height="80dp" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Sair"
         android:id="@+id/btnSair"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:height="80dp" />
 </LinearLayout>

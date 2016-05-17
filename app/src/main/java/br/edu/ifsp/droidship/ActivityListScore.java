@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
@@ -56,6 +57,13 @@ public class ActivityListScore extends AppCompatActivity {
 
         lstScore = (ListView) findViewById(R.id.lstScore);
         lstScore.setAdapter(new ScoreAdapter(this, list));
+
+
+    }
+
+    public void backButton(View view) {
+        Intent intent = new Intent(getBaseContext(), ActivityScore.class);
+        startActivity(intent);
     }
 
     public void addScore(){

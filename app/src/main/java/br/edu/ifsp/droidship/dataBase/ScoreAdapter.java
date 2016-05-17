@@ -47,8 +47,8 @@ public class ScoreAdapter extends BaseAdapter {
         TextView scoreTextView = (TextView)item.findViewById(R.id.scoreTextView);
 
         String name = scoreModel.getName();
-        if (name.length() > 30)
-            name = name.substring(0, 30) + "...";
+        //if (name.length() > 30)
+        //    name = name.substring(0, 30) + "...";
 
         nameTextView.setText(name);
         scoreTextView.setText(scoreModel.getScore());

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="br.edu.ifsp.droidship.MenuActivity"
-    android:background="@drawable/background1">
+    android:background="@drawable/background2">
 
 
     <TextView
@@ -26,7 +26,19 @@
         android:text="Jogar"
         android:id="@+id/playButton"
         android:layout_gravity="center_horizontal"
+        android:onClick="playGame"
+        android:background="#71529c"
         android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="116dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="High Score"
+        android:id="@+id/highScoreButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="playGame" />
+        android:background="#71529c"
+        android:onClick="highScore" />
 </RelativeLayout>

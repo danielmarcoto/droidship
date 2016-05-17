@@ -21,6 +21,15 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="487dp"
+        android:layout_height="470dp"
         android:id="@+id/lstScore" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="Voltar"
+        android:id="@+id/BackButton"
+        android:layout_gravity="center_horizontal"
+        android:background="#551e7c"
+        android:onClick="backButton" />
 </LinearLayout>
