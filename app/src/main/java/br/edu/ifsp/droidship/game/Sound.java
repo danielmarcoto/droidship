@@ -27,6 +27,7 @@ public class Sound {
 
         // Música de fundo
         mediaPlayer = MediaPlayer.create(context, R.raw.music2);
+        mediaPlayer.setVolume(0.3f, 0.3f);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
