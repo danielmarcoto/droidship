@@ -3,6 +3,9 @@ package br.edu.ifsp.droidship.game;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,7 +21,8 @@ import br.edu.ifsp.droidship.ActivityScore;
  * Created by danielmarcoto on 13/04/16.
  */
 public class DroidShip extends SurfaceView implements Runnable,
-        View.OnTouchListener, ExplosionDelegate, SoundPool.OnLoadCompleteListener {
+        View.OnTouchListener, ExplosionDelegate,
+        SoundPool.OnLoadCompleteListener, SensorEventListener {
 
     private final SurfaceHolder holder = getHolder();
 
@@ -155,5 +159,44 @@ public class DroidShip extends SurfaceView implements Runnable,
         if (i == Sound.SPACESHIP_EXPLODE) {
             Log.i("Debug", "onLoadComplete: SPACESHIP_EXPLODE");
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        // atualizar o valor da nave pelo sensor do acelerometro
+        //spaceship.setX(sensorEvent.values[0]);
+        //spaceship.setY(sensorEvent.values[1]);
+
+        final int noise = 1;
+
+        float xAccelerometer = sensorEvent.values[0];
+        float yAccelerometer = sensorEvent.values[1];
+
+        Log.i("Debug", "Accelerometer X: " + xAccelerometer);
+        Log.i("Debug", "Accelerometer Y: " + yAccelerometer);
+
+        float newX = spaceship.getX() - (xAccelerometer * 2);
+        float newY = spaceship.getY() + (yAccelerometer * 2);
+
+        //if (xAccelerometer < -noise)
+
+        if (!spaceship.isOutOfScreenLeft() && spaceship.getX() > newX)
+            spaceship.setX(newX);
+
+        if (!spaceship.isOutOfScreenRight() && spaceship.getX() < newX)
+            spaceship.setX(newX);
+
+        if (!spaceship.isOutOfScreenTop() && spaceship.getY() > newY)
+            spaceship.setY(newY);
+
+        if (!spaceship.isOutOfScreenBottom() && spaceship.getY() < newY)
+            spaceship.setY(newY);
+
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }
