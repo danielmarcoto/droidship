@@ -2,6 +2,7 @@ package br.edu.ifsp.droidship.game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,6 +16,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.io.ByteArrayOutputStream;
+
 import br.edu.ifsp.droidship.ActivityScore;
 
 /**
@@ -26,6 +29,7 @@ public class DroidShip extends SurfaceView implements Runnable,
 
     private final SurfaceHolder holder = getHolder();
 
+    private OnGameEndDelegate gameEndDelegate;
     private GestureDetector gestureDetector;
     private EndlessEnemies endlessEnemies;
     private Spaceship spaceship;
@@ -40,9 +44,21 @@ public class DroidShip extends SurfaceView implements Runnable,
     private Context context;
 
     private boolean isRunning;
+    private Bitmap bitmapEndGame;
 
     public DroidShip(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
+
+        this.context = context;
+
+        setClickable(true);
+        setOnTouchListener(this);
+
+        initialize();
+    }
+
+    public DroidShip(Context context){
+        super(context);
 
         this.context = context;
 
@@ -78,6 +94,8 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         explosions = new Explosions(context, sound);
         explosions.setDelegate(this);
+
+
     }
 
     public void pause(){
@@ -99,6 +117,8 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             Canvas canvas = holder.lockCanvas();
 
+
+
             backgroundGame.drawNode(canvas);
             control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
@@ -116,6 +136,9 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             // Verifica se há colisão e encerra quando colide
             if (collisionDetector.hasHit()){
+                if (gameEndDelegate != null) {
+                    bitmapEndGame = gameEndDelegate.captureScreen();
+                }
                 explosions.addExplosion(spaceship);
                 spaceship.setAlpha(0);
                 timer.stop();
@@ -135,8 +158,13 @@ public class DroidShip extends SurfaceView implements Runnable,
     }
 
     public void recordScore(){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmapEndGame.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
         Intent intent = new Intent(context, ActivityScore.class);
-        intent.putExtra("SCORE", score.getScore());
+        intent.putExtra(GameHelper.KEY_BITMAP, byteArray);
+        intent.putExtra(GameHelper.KEY_SCORE, score.getScore());
         context.startActivity(intent);
     }
 
@@ -163,10 +191,11 @@ public class DroidShip extends SurfaceView implements Runnable,
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        return;
         // atualizar o valor da nave pelo sensor do acelerometro
         //spaceship.setX(sensorEvent.values[0]);
         //spaceship.setY(sensorEvent.values[1]);
-
+        /*
         final int noise = 1;
 
         float xAccelerometer = sensorEvent.values[0];
@@ -191,12 +220,19 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         if (!spaceship.isOutOfScreenBottom() && spaceship.getY() < newY)
             spaceship.setY(newY);
-
-
+            */
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
+        //
+    }
 
+    public OnGameEndDelegate getGameEndDelegate() {
+        return gameEndDelegate;
+    }
+
+    public void setGameEndDelegate(OnGameEndDelegate gameEndDelegate) {
+        this.gameEndDelegate = gameEndDelegate;
     }
 }

@@ -3,17 +3,21 @@ package br.edu.ifsp.droidship;
 import android.app.AlertDialog;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
 import br.edu.ifsp.droidship.game.DroidShip;
+import br.edu.ifsp.droidship.game.OnGameEndDelegate;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnGameEndDelegate {
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -28,19 +32,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        droidShip = (DroidShip) findViewById(R.id.droidship);
+        //droidShip = (DroidShip) findViewById(R.id.droidship);
+        droidShip = new DroidShip(this);
+        droidShip.setGameEndDelegate(this);
+
+        FrameLayout container = (FrameLayout) findViewById(R.id.container);
+        container.addView(droidShip);
 
         // Inicializar o acelerometro
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-
         try {
             dataBase = new DataBase(this);
             conn = dataBase.getWritableDatabase();
-
             scoreRepository = new ScoreRepository(conn);
-
 
         }catch (SQLException ex){
 
@@ -98,5 +104,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public Bitmap captureScreen() {
+        // create bitmap screen capture
+        //View v1 = getWindow().getDecorView().getRootView();
+        View v1 = droidShip.getRootView();
+        v1.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+        //v1.setDrawingCacheEnabled(false);
+        return  bitmap;
+    }
 }

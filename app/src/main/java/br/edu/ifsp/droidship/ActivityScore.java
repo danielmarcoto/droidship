@@ -3,9 +3,13 @@ package br.edu.ifsp.droidship;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import br.edu.ifsp.droidship.game.GameHelper;
+
 
 /**
  * Created by Eduardo on 13/05/2016.
@@ -18,7 +22,7 @@ public class ActivityScore extends Activity implements View.OnClickListener {
     private Button btnPlayAgain;
     private Button btnSair;
     private int totalScore;
-
+    private byte[] bitmapEndGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +40,19 @@ public class ActivityScore extends Activity implements View.OnClickListener {
         btnSair.setOnClickListener(this);
 
         Intent intent = getIntent();
-        totalScore = intent.getIntExtra("SCORE", 0);
 
-        edtScore.setText(Integer.toString(totalScore));
+        if (intent.hasExtra(GameHelper.KEY_SCORE)) {
+            totalScore = intent.getIntExtra(GameHelper.KEY_SCORE, 0);
+            edtScore.setText(String.valueOf(totalScore));
+        }
+
+        if (intent.hasExtra(GameHelper.KEY_BITMAP)){
+            bitmapEndGame = intent.getByteArrayExtra(GameHelper.KEY_BITMAP);
+            Log.i("Debug", "Tem KeyBitmap em ActivityScore");
+        }
 
         // Omitir o botão sair
         btnSair.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
@@ -53,8 +63,9 @@ public class ActivityScore extends Activity implements View.OnClickListener {
             startActivity(intent);
         }else if( v == btnInserir){
             Intent intent = new Intent(this, ActivityListScore.class);
-            intent.putExtra("NOME", edtNome.getText().toString());
-            intent.putExtra("SCORE", edtScore.getText().toString());
+            intent.putExtra(GameHelper.KEY_NAME, edtNome.getText().toString());
+            intent.putExtra(GameHelper.KEY_SCORE, edtScore.getText().toString());
+            intent.putExtra(GameHelper.KEY_BITMAP, bitmapEndGame);
             startActivity(intent);
         }else{
             Intent intent = new Intent(Intent.ACTION_MAIN);

@@ -5,9 +5,16 @@
     android:layout_height="fill_parent"
     tools:context="br.edu.ifsp.droidship.MainActivity">
 
+    <!--
     <br.edu.ifsp.droidship.game.DroidShip
         android:id="@+id/droidship"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+        -->
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

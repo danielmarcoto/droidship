@@ -19,9 +19,17 @@
         android:textAlignment="center"
         android:background="#551e7c" />
 
+    <Button
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:text="Compartilhar"
+        android:id="@+id/shareButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onShare" />
+
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="470dp"
+        android:layout_height="418dp"
         android:id="@+id/lstScore" />
 
     <Button

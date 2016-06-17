@@ -2,4 +2,5 @@
     <string name="app_name">Droidship</string>
     <string name="edtNome" />
     <string name="edtScore" />
+    <string name="facebook_app_id">1138295129577506</string>
 </resources>

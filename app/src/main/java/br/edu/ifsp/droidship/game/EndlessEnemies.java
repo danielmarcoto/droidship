@@ -47,6 +47,7 @@ public class EndlessEnemies {
             if (score <= 0) score = 1;
 
             float speed = random.nextInt(score) + 1;
+            //float speed = 1;
 
             Enemy enemy;
 
