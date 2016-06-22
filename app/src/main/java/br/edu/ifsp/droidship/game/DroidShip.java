@@ -120,10 +120,12 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             Canvas canvas = holder.lockCanvas();
 
-            if (gameControlMode == GameControlMode.Touch)
-                control.drawNode(canvas);
-
             backgroundGame.drawNode(canvas);
+
+            if (gameControlMode == GameControlMode.Touch) {
+                control.drawNode(canvas);
+            }
+
             endlessEnemies.drawNode(canvas);
             score.drawScore(canvas);
             spaceship.drawNode(canvas);

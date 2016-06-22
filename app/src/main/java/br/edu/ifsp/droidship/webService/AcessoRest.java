@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
  */
 public class AcessoRest {
 
-    private int  TIMEOUT_MILLISEC = 3000;
+    //private int  TIMEOUT_MILLISEC = 3000;
 
     public String getScore(String url)
     {
