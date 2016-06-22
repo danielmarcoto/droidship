@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreRepository;
 import br.edu.ifsp.droidship.game.DroidShip;
+import br.edu.ifsp.droidship.game.GameHelper;
 import br.edu.ifsp.droidship.game.OnGameEndDelegate;
 
 public class MainActivity extends AppCompatActivity implements OnGameEndDelegate {
@@ -32,9 +33,17 @@ public class MainActivity extends AppCompatActivity implements OnGameEndDelegate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DroidShip.GameControlMode gameControlMode = DroidShip.GameControlMode.Touch;
+
+        if (getIntent().hasExtra(GameHelper.KEY_GAME_MODE)) {
+            gameControlMode = (DroidShip.GameControlMode)getIntent()
+                    .getSerializableExtra(GameHelper.KEY_GAME_MODE);
+        }
+
         //droidShip = (DroidShip) findViewById(R.id.droidship);
         droidShip = new DroidShip(this);
         droidShip.setGameEndDelegate(this);
+        droidShip.setGameControlMode(gameControlMode);
 
         FrameLayout container = (FrameLayout) findViewById(R.id.container);
         container.addView(droidShip);

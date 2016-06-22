@@ -1,14 +1,11 @@
 package br.edu.ifsp.droidship;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +19,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 
 import java.io.ByteArrayInputStream;
@@ -31,8 +27,8 @@ import java.util.List;
 import br.edu.ifsp.droidship.dataBase.DataBase;
 import br.edu.ifsp.droidship.dataBase.ScoreAdapter;
 import br.edu.ifsp.droidship.dataBase.ScoreModel;
-import br.edu.ifsp.droidship.dataBase.ScoreRepository;
 import br.edu.ifsp.droidship.game.GameHelper;
+import br.edu.ifsp.droidship.webService.ScoreRemoteRepository;
 
 public class ActivityListScore extends AppCompatActivity {
 
@@ -44,6 +40,7 @@ public class ActivityListScore extends AppCompatActivity {
     private List<ScoreModel> list;
     private Bitmap bitmapEndGame;
     private Button shareButton;
+    private ScoreRemoteRepository scoreRepository;
 
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
@@ -96,7 +93,7 @@ public class ActivityListScore extends AppCompatActivity {
             // Esconde o botão caso não tenha valor para exibir
             shareButton.setVisibility(View.INVISIBLE);
         }
-
+        /*
         try {
             dataBase = new DataBase(this);
             conn = dataBase.getWritableDatabase();
@@ -113,19 +110,25 @@ public class ActivityListScore extends AppCompatActivity {
             dlg.setMessage("Erro na conexão");
             dlg.setNeutralButton("Ok", null);
             dlg.show();
-        }
+        }*/
+
+        scoreRepository = new ScoreRemoteRepository();
+
+        list = scoreRepository.listAll();
 
         lstScore = (ListView) findViewById(R.id.lstScore);
         lstScore.setAdapter(new ScoreAdapter(this, list));
 
-        // Apenas para testar
-        if (score == null){
+        // Salva apenas se não for vazio a pontuação
+        if (score != null && !score.isEmpty())
+        {
+            addScore();
 
-            score = "300";
-            nome = "Daniel Marcoto";
+            ScoreModel scoreModel = new ScoreModel();
+            scoreModel.setName(nome);
+            scoreModel.setScore(score);
+            list.add(scoreModel);
         }
-
-
     }
 
     public void backButton(View view) {
@@ -134,14 +137,15 @@ public class ActivityListScore extends AppCompatActivity {
     }
 
     public void addScore(){
-
+        /*
         ContentValues values = new ContentValues();
 
         values.put("NOME", nome );
         values.put("PONTOS", score );
 
         conn.insertOrThrow("HIGHSCORE", null, values);
-
+        */
+        scoreRepository.insert(nome, Integer.parseInt(score));
     }
 
     public void onShare(View view){
@@ -161,8 +165,8 @@ public class ActivityListScore extends AppCompatActivity {
                 .addPhoto(sharePhoto)
                 .build();
         */
-        //if (ShareDialog.canShow(ShareLinkContent.class)) {
-        if (ShareDialog.canShow(SharePhotoContent.class)) {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            //if (ShareDialog.canShow(SharePhotoContent.class)) {
 
             ShareLinkContent content = new ShareLinkContent.Builder()
                     .setContentTitle("Compartilhar")
@@ -170,7 +174,7 @@ public class ActivityListScore extends AppCompatActivity {
                     .setContentDescription(description)
                     .build();
 
-            shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+            shareDialog.show(content, ShareDialog.Mode.FEED);
 
             Log.i("Debug", "Chamou o diálogo");
         }

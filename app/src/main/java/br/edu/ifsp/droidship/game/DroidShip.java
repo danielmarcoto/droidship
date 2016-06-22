@@ -43,6 +43,8 @@ public class DroidShip extends SurfaceView implements Runnable,
     private Sound sound;
     private Context context;
 
+    private GameControlMode gameControlMode;
+
     private boolean isRunning;
     private Bitmap bitmapEndGame;
 
@@ -95,7 +97,8 @@ public class DroidShip extends SurfaceView implements Runnable,
         explosions = new Explosions(context, sound);
         explosions.setDelegate(this);
 
-
+        // Define um padrão para interação do jogo
+        gameControlMode = GameControlMode.Touch;
     }
 
     public void pause(){
@@ -117,10 +120,10 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             Canvas canvas = holder.lockCanvas();
 
-
+            if (gameControlMode == GameControlMode.Touch)
+                control.drawNode(canvas);
 
             backgroundGame.drawNode(canvas);
-            control.drawNode(canvas);
             endlessEnemies.drawNode(canvas);
             score.drawScore(canvas);
             spaceship.drawNode(canvas);
@@ -151,7 +154,8 @@ public class DroidShip extends SurfaceView implements Runnable,
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
-        if (motionEvent.getY() > control.getY())
+        if (gameControlMode == GameControlMode.Touch &&
+                motionEvent.getY() > control.getY())
             gestureDetector.onTouchEvent(motionEvent);
 
         return false;
@@ -191,18 +195,19 @@ public class DroidShip extends SurfaceView implements Runnable,
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        return;
+        if (gameControlMode != GameControlMode.Accelerometer) return;
+
         // atualizar o valor da nave pelo sensor do acelerometro
         //spaceship.setX(sensorEvent.values[0]);
         //spaceship.setY(sensorEvent.values[1]);
-        /*
+
         final int noise = 1;
 
         float xAccelerometer = sensorEvent.values[0];
         float yAccelerometer = sensorEvent.values[1];
 
-        Log.i("Debug", "Accelerometer X: " + xAccelerometer);
-        Log.i("Debug", "Accelerometer Y: " + yAccelerometer);
+        //Log.i("Debug", "Accelerometer X: " + xAccelerometer);
+        //Log.i("Debug", "Accelerometer Y: " + yAccelerometer);
 
         float newX = spaceship.getX() - (xAccelerometer * 2);
         float newY = spaceship.getY() + (yAccelerometer * 2);
@@ -220,7 +225,6 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         if (!spaceship.isOutOfScreenBottom() && spaceship.getY() < newY)
             spaceship.setY(newY);
-            */
     }
 
     @Override
@@ -234,5 +238,14 @@ public class DroidShip extends SurfaceView implements Runnable,
 
     public void setGameEndDelegate(OnGameEndDelegate gameEndDelegate) {
         this.gameEndDelegate = gameEndDelegate;
+    }
+
+    public void setGameControlMode(GameControlMode gameControlMode) {
+        this.gameControlMode = gameControlMode;
+    }
+
+    public enum GameControlMode {
+        Touch,
+        Accelerometer
     }
 }
