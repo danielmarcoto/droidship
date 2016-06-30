@@ -174,7 +174,7 @@ public class ActivityListScore extends AppCompatActivity {
                     .setContentDescription(description)
                     .build();
 
-            shareDialog.show(content, ShareDialog.Mode.FEED);
+            shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
 
             Log.i("Debug", "Chamou o diálogo");
         }

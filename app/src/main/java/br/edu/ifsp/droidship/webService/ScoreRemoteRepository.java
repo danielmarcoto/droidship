@@ -16,7 +16,9 @@ import br.edu.ifsp.droidship.dataBase.ScoreModel;
 public class ScoreRemoteRepository {
 
     //private static final String IP = "192.168.0.12"; //Fernanda
-    private static final String IP = "192.168.0.128"; //Daniel
+    private static final String IP = "10.4.192.169"; //Daniel
+    //private static final String IP = "172.20.10.8"; //Daniel
+
 
     public List<ScoreModel> listAll() {
 

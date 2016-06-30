@@ -3,7 +3,9 @@ package br.edu.ifsp.droidship.game;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +21,7 @@ import android.view.View;
 import java.io.ByteArrayOutputStream;
 
 import br.edu.ifsp.droidship.ActivityScore;
+import br.edu.ifsp.droidship.R;
 
 /**
  * Created by danielmarcoto on 13/04/16.
@@ -36,12 +39,13 @@ public class DroidShip extends SurfaceView implements Runnable,
     private Control control;
     private ScreenHelper screenHelper;
     private CollisionDetector collisionDetector;
-    private BackgroundGame backgroundGame;
+    private BackgroundStarsGame backgroundStarsGame;
     private Timer timer;
     private Score score;
     private Explosions explosions;
     private Sound sound;
     private Context context;
+    private Bitmap background;
 
     private GameControlMode gameControlMode;
 
@@ -88,7 +92,7 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         collisionDetector = new CollisionDetector(endlessEnemies, spaceship);
 
-        backgroundGame = new BackgroundGame(context, screenHelper);
+        backgroundStarsGame = new BackgroundStarsGame(context, screenHelper);
 
         timer = new Timer();
 
@@ -99,6 +103,12 @@ public class DroidShip extends SurfaceView implements Runnable,
 
         // Define um padrão para interação do jogo
         gameControlMode = GameControlMode.Touch;
+
+        // Inclusão da imagem de fundo
+        Bitmap bitmap = BitmapFactory.decodeResource(
+                context.getResources(), R.drawable.background1);
+        background = Bitmap
+                .createScaledBitmap(bitmap, bitmap.getWidth(), screenHelper.getHeight(), false);
     }
 
     public void pause(){
@@ -120,7 +130,8 @@ public class DroidShip extends SurfaceView implements Runnable,
 
             Canvas canvas = holder.lockCanvas();
 
-            backgroundGame.drawNode(canvas);
+            canvas.drawBitmap(background, 0, 0, new Paint());
+            backgroundStarsGame.drawNode(canvas);
 
             if (gameControlMode == GameControlMode.Touch) {
                 control.drawNode(canvas);
@@ -135,7 +146,7 @@ public class DroidShip extends SurfaceView implements Runnable,
             endlessEnemies.randomCreateEnemy(timer);
 
             endlessEnemies.falling();
-            backgroundGame.move();
+            backgroundStarsGame.move();
 
             timer.incrementIfAble();
 
@@ -203,7 +214,7 @@ public class DroidShip extends SurfaceView implements Runnable,
         //spaceship.setX(sensorEvent.values[0]);
         //spaceship.setY(sensorEvent.values[1]);
 
-        final int noise = 1;
+        //final int noise = 1;
 
         float xAccelerometer = sensorEvent.values[0];
         float yAccelerometer = sensorEvent.values[1];

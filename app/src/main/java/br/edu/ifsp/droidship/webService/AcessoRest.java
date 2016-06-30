@@ -3,7 +3,6 @@ package br.edu.ifsp.droidship.webService;
 import android.os.StrictMode;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -13,10 +12,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Created by Fernanda-PC on 08/06/2016.
@@ -70,33 +66,23 @@ public class AcessoRest {
             httpPOST.setHeader("Accept", "application/json");
             httpPOST.setHeader("Content-type", "application/json");
 
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String responseBody = httpclient.execute(httpPOST,
+                    responseHandler);
+
+            retorno = responseBody;
+
+            /*
             HttpResponse httpResponse = httpclient.execute(httpPOST);
             InputStream inputStream = httpResponse.getEntity().getContent();
 
             if(inputStream != null)
-                retorno = convertStreamToString(inputStream);
+                retorno = convertStreamToString(inputStream);*/
 
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
         return retorno;
-    }
-
-    private String convertStreamToString(InputStream is) {
-
-        String line = "";
-        StringBuilder total = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
-        try {
-            while ((line = rd.readLine()) != null) {
-                total.append(line);
-            }
-        }
-        catch (Exception e) {
-        }
-
-        return total.toString();
     }
 }
